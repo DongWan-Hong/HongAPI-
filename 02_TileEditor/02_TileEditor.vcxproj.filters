@@ -1,0 +1,235 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="소스 파일">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="헤더 파일">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="리소스 파일">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Design">
+      <UniqueIdentifier>{dc1654b5-5a24-4df5-bf9d-920bf2442dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\Line">
+      <UniqueIdentifier>{a3f71cca-02e2-4712-9259-b0255d463cb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\ScrollMgr">
+      <UniqueIdentifier>{caa416cc-2487-4f34-9f72-0c68887644ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\KeyMgr">
+      <UniqueIdentifier>{732ac5c8-72f1-4da0-8b63-112f019a051a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\Tile">
+      <UniqueIdentifier>{41bab889-6c76-4522-8d09-16dd5bc9699d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\Tile\Tile">
+      <UniqueIdentifier>{7875dacb-7871-4169-b380-555b09617f0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\BmpMgr">
+      <UniqueIdentifier>{f78c1ec9-e537-4357-b864-11806089d269}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\BmpMgr\MyBmp">
+      <UniqueIdentifier>{752d1f29-1870-499d-b0d8-df42efeef308}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\AbstractFactory">
+      <UniqueIdentifier>{9c2cf97e-f4a4-4e27-9228-fe3e1bbdd3df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. Main_Game">
+      <UniqueIdentifier>{d0cf124c-20c9-44bb-8747-a7362fee6876}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\SceneMgr">
+      <UniqueIdentifier>{c3a85296-34a7-46a3-b715-288532cb2d57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Design\CobjMgr">
+      <UniqueIdentifier>{af2fa8e5-dc5b-449d-a163-461be57898e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. Obj">
+      <UniqueIdentifier>{bd7cf02a-8156-41ef-b7cd-927ece9cdf65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene">
+      <UniqueIdentifier>{9f291c43-6d00-40bc-8010-8f8655077ca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\00. Logo">
+      <UniqueIdentifier>{b0e515dc-7bb4-4070-b39c-183b2eac6f65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\01. Menu">
+      <UniqueIdentifier>{01fd80ae-aa1e-4f01-b312-1095f483f4f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\02. Edit">
+      <UniqueIdentifier>{41088933-76b0-4f3a-9d7a-55b18759163b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Scene\03. Stage">
+      <UniqueIdentifier>{63bf28e1-e5bd-4a80-890d-91ffd159587e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="02_TileEditor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CMainGame.h">
+      <Filter>00. Main_Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Define.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="CLine.h">
+      <Filter>Design\Line</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollMgr.h">
+      <Filter>Design\ScrollMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CKeyMgr.h">
+      <Filter>Design\KeyMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CLineMgr.h">
+      <Filter>Design\Line</Filter>
+    </ClInclude>
+    <ClInclude Include="CTile.h">
+      <Filter>Design\Tile\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CTileMgr.h">
+      <Filter>Design\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyBmp.h">
+      <Filter>Design\BmpMgr\MyBmp</Filter>
+    </ClInclude>
+    <ClInclude Include="CBmpMgr.h">
+      <Filter>Design\BmpMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CAbstractFactory.h">
+      <Filter>Design\AbstractFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="CObj.h">
+      <Filter>01. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyButton.h">
+      <Filter>01. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CMouse.h">
+      <Filter>01. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayer.h">
+      <Filter>01. Obj</Filter>
+    </ClInclude>
+    <ClInclude Include="CSceneMgr.h">
+      <Filter>Design\SceneMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CObjMgr.h">
+      <Filter>Design\CobjMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="CLogo.h">
+      <Filter>02. Scene\00. Logo</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyEdit.h">
+      <Filter>02. Scene\02. Edit</Filter>
+    </ClInclude>
+    <ClInclude Include="CMyMenu.h">
+      <Filter>02. Scene\01. Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="CStage.h">
+      <Filter>02. Scene\03. Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="CScene.h">
+      <Filter>02. Scene</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="02_TileEditor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="CMainGame.cpp">
+      <Filter>00. Main_Game</Filter>
+    </ClCompile>
+    <ClCompile Include="CLine.cpp">
+      <Filter>Design\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrollMgr.cpp">
+      <Filter>Design\ScrollMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CKeyMgr.cpp">
+      <Filter>Design\KeyMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CLineMgr.cpp">
+      <Filter>Design\Line</Filter>
+    </ClCompile>
+    <ClCompile Include="CTile.cpp">
+      <Filter>Design\Tile\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CTileMgr.cpp">
+      <Filter>Design\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyBmp.cpp">
+      <Filter>Design\BmpMgr\MyBmp</Filter>
+    </ClCompile>
+    <ClCompile Include="CBmpMgr.cpp">
+      <Filter>Design\BmpMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CObj.cpp">
+      <Filter>01. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyButton.cpp">
+      <Filter>01. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CMouse.cpp">
+      <Filter>01. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayer.cpp">
+      <Filter>01. Obj</Filter>
+    </ClCompile>
+    <ClCompile Include="CSceneMgr.cpp">
+      <Filter>Design\SceneMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CObjMgr.cpp">
+      <Filter>Design\CobjMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="CLogo.cpp">
+      <Filter>02. Scene\00. Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyEdit.cpp">
+      <Filter>02. Scene\02. Edit</Filter>
+    </ClCompile>
+    <ClCompile Include="CMyMenu.cpp">
+      <Filter>02. Scene\01. Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage.cpp">
+      <Filter>02. Scene\03. Stage</Filter>
+    </ClCompile>
+    <ClCompile Include="CScene.cpp">
+      <Filter>02. Scene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="02_TileEditor.rc">
+      <Filter>리소스 파일</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="02_TileEditor.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
