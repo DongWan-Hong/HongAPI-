@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CCollisionMgr.h"
+#include "CPlayer.h"
 
 void CCollisionMgr::Collision_Rect(list<CObj*> _Dst, list<CObj*> _Src)
 {
@@ -47,7 +48,6 @@ bool CCollisionMgr::Check_Circle(CObj* _Dst, CObj* _Src)
 
 	return fRadius >= fDiagonal;
 }
-
 void CCollisionMgr::Collision_RectEx(list<CObj*> _Dst, list<CObj*> _Src)
 {
 	float	fX(0.f), fY(0.f);
@@ -58,38 +58,70 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dst, list<CObj*> _Src)
 		{
 			if (Check_Rect(Dst, Src, &fX, &fY))
 			{
-				// 상 하 충돌
-				if (fX > fY)
+				CPlayer* pPlayer = dynamic_cast<CPlayer*>(Dst);
+				if (pPlayer)
 				{
-					// 상 충돌
-					if (Dst->Get_Info().fY < Src->Get_Info().fY)
+					if (pPlayer->Get_Grivity()>=0)
+					{ 
+					if (fX > fY)// 상 하 충돌
 					{
-						Dst->Set_PosY(-fY);
+						// 상 충돌
+						if (Dst->Get_Info().fY < Src->Get_Info().fY) // 플레이어 Y가 블럭 Y보다 높을때
+						{
+							if (Dst->Get_OBJID() == OBJ_PLAYER && Src->Get_OBJID() == OBJ_BLOCK)
+							{
+								Dst->OnCollision(Src);
+
+							}
+							Dst->Set_PosY(-fY);
+						}
+						// 하 충돌
+						else
+						{
+							//Dst->Set_PosY(+fY);
+						}
+
 					}
-					// 하 충돌
+					// 좌 우 충돌
 					else
 					{
-						Dst->Set_PosY(+fY);
+						// 좌 충돌
+						if (Dst->Get_Info().fX < Src->Get_Info().fX)
+						{
+							/*Dst->Set_PosX(-fX);*/
+						}
+						// 우 충돌
+						else
+						{
+							/*Dst->Set_PosX(fX);*/
+						}
 					}
-				}
-				
-				// 좌 우 충돌
-				else
-				{
-					// 좌 충돌
-					if (Dst->Get_Info().fX < Src->Get_Info().fX)
-					{
-						Dst->Set_PosX(-fX);
-					}
-					// 우 충돌
-					else
-					{
-						Dst->Set_PosX(fX);
 					}
 				}
 			}
 		}
 	}
+}
+
+
+
+void CCollisionMgr::Check_Block(list<CObj*> _Dst, list<CObj*> _Src) // 주체 Dst 
+{
+	RECT rc{};
+
+	for (auto& Dst : _Dst)
+	{
+		for (auto& Src : _Src)
+		{
+			if (IntersectRect(&rc, Dst->Get_Rect(), Src->Get_Rect()))
+			{
+				
+			
+				
+			}
+		}
+	}
+
 }
 
 bool CCollisionMgr::Check_Rect(CObj* _Dst, CObj* _Src, float* pX, float* pY)

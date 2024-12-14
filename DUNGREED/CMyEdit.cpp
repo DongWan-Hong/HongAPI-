@@ -4,6 +4,7 @@
 #include "CBmpMgr.h"
 #include "CKeyMgr.h"
 #include "CScrollMgr.h"
+#include "BlockMgr.h"
 
 CMyEdit::CMyEdit()
 {
@@ -16,14 +17,16 @@ CMyEdit::~CMyEdit()
 
 void CMyEdit::Initialize()
 {
-	CTileMgr::Get_Instance()->Initialize();
+	//CTileMgr::Get_Instance()->Initialize();
+	CBlockMgr::Get_Instance()->Initialize();
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Edit/Tile.bmp", L"Tile");
 }
 
 int CMyEdit::Update()
 {
-	CTileMgr::Get_Instance()->Update();
+	//CTileMgr::Get_Instance()->Update();
+	CBlockMgr::Get_Instance()->Update();
 
 	return 0;
 }
@@ -31,13 +34,15 @@ int CMyEdit::Update()
 void CMyEdit::Late_Update()
 {
 	Key_Input();
-	CTileMgr::Get_Instance()->Late_Update();
+	//CTileMgr::Get_Instance()->Late_Update();
+	CBlockMgr::Get_Instance()->Late_Update();
 
 }
 
 void CMyEdit::Render(HDC hDC)
 {
-	CTileMgr::Get_Instance()->Render(hDC);
+	//CTileMgr::Get_Instance()->Render(hDC);
+	CBlockMgr::Get_Instance()->Render(hDC);
 }
 
 void CMyEdit::Release()

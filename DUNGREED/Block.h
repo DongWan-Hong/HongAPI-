@@ -22,5 +22,6 @@ public:
 
 protected:
     BLOCKTYPE m_eBlockType;
+  
 };
 

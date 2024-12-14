@@ -35,6 +35,16 @@ public:
 		pBlock->Initialize();
 		return pBlock;
 	}
-	
+
+	static CObj* Create_Block(OBJID _eOBJID, INFO* _tInfo)
+	{
+		CObj* pObj = new T;
+		pObj->Initialize();
+		pObj->Set_Pos(_tInfo->fX, _tInfo->fY);
+		pObj->Set_Size(_tInfo->fCX, _tInfo->fCY);
+		pObj->Set_OBJID(_eOBJID);
+
+		return pObj;
+	}
 };
 

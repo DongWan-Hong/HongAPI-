@@ -7,7 +7,7 @@
 #include "CScrollMgr.h"
 #include "CTileMgr.h"
 #include "Block.h"
-#include "CTileMgr.h"
+#include "BlockMgr.h"
 
 CStage::CStage()
 {
@@ -25,30 +25,37 @@ void CStage::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image3/Town/TownLayerDay.bmp", L"Back3"); // 맨뒤에서 3번째의 산
 	//CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/TownScene/Town.bmp", L"Ground");
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image3/Town/SecondFloor2.bmp", L"Ground2");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/TownScene/Townx4.bmp", L"Ground3");
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 
 	for (int i = 2; i < 10; i++) // 블럭 크기는 180
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(i*170, 1200, 0.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(i*50.f, 1200.f, 0.f));
 	}
+	
 
-	CTileMgr::Get_Instance()->Initialize();
+
+
+
+	//CTileMgr::Get_Instance()->Initialize();
+	CBlockMgr::Get_Instance()->Initialize();
 
 }
 
 int CStage::Update()
 {
 	CObjMgr::Get_Instance()->Update();
-	CTileMgr::Get_Instance()->Update();
+	//CTileMgr::Get_Instance()->Update();
+	CBlockMgr::Get_Instance()->Update();
 	return 0;
 }
 
 void CStage::Late_Update()
 {
 	CObjMgr::Get_Instance()->Late_Update();
-	CTileMgr::Get_Instance()->Late_Update();
+	//CTileMgr::Get_Instance()->Late_Update();
+	CBlockMgr::Get_Instance()->Late_Update();
 }
 
 void CStage::Render(HDC hDC)
@@ -61,7 +68,7 @@ void CStage::Render(HDC hDC)
 	HDC hBack2DC = CBmpMgr::Get_Instance()->Find_Image(L"Back2");
 	HDC hBack3DC = CBmpMgr::Get_Instance()->Find_Image(L"Back3");
 
-	HDC hGroudkDC = CBmpMgr::Get_Instance()->Find_Image(L"Ground2");
+	HDC hGroudkDC = CBmpMgr::Get_Instance()->Find_Image(L"Ground3");
 	
 	//StretchBlt(hDC,
 	//	iScrollX,
@@ -153,15 +160,30 @@ void CStage::Render(HDC hDC)
 		RGB(255, 0, 255));
 
 
+	GdiTransparentBlt(hDC,
+		iScrollX,
+		iScrollY-200,
+		7616.f,			 // 받아올 이미지 어떻게 할껀지
+		1536.f,
+		hGroudkDC,
+		0,			  // 이미지 좌표
+		0,
+		7616.f,			// 복사할 이미지의 가로, 세로
+		1536.f,
+		RGB(255,255, 255));
+
 	// 제거할 색상
 
 
 	CObjMgr::Get_Instance()->Render(hDC);
-	CTileMgr::Get_Instance()->Render(hDC);
+	//CTileMgr::Get_Instance()->Render(hDC);
+	CBlockMgr::Get_Instance()->Render(hDC);
+	
 }
 
 void CStage::Release()
 {
+	CBlockMgr::Get_Instance()->Destroy_Instance();
 	CTileMgr::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_PLAYER);
 }

@@ -12,6 +12,7 @@ CPlayer::CPlayer()
 	: m_bJump(false), m_fJumpPower(0.f), m_fTime(0.f)
 
 {
+	m_fGravity = 0.f;
 	ZeroMemory(&m_tPosin, sizeof(POINT));
 }
 
@@ -25,15 +26,14 @@ void CPlayer::Initialize()
 	m_tInfo = { 200.f,1100.f, 77.f, 90.f };
 	m_fSpeed = 5.f;
 	m_fDistance = 100.f; //
-
+	m_eOBJID = OBJ_PLAYER;
 	m_fJumpPower = 20.f;
-
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/Player/baseCharIdle.bmp",  L"Player_IDLE");
 	//CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Player/Player_UP.bmp",	 L"Player_UP");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/Player/baseCharRun.bmp", L"Player_Right");
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/Player/Dir/Left.bmp", L"Player_Left");
 	
-
+	
 
 
 	m_pImgKey = L"Player_IDLE";
@@ -52,6 +52,7 @@ void CPlayer::Initialize()
 
 int CPlayer::Update()
 {
+	
 	Key_Input();
 	Change_Motion();
 
@@ -88,37 +89,38 @@ void CPlayer::Render(HDC hDC)
 
 	
 
-
-
 }
 
 void CPlayer::Release()
 {
 }
 
+
+
 void CPlayer::Key_Input()
 {
-	if (CKeyMgr::Get_Instance()->Key_Pressing(VK_LEFT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
 	{
 		m_tInfo.fX -= m_fSpeed;
 		m_pImgKey = L"Player_Left";
 		m_eCurState = WALK;
 	}
-	else if (CKeyMgr::Get_Instance()->Key_Pressing(VK_RIGHT))
+	if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
 	{
 		m_tInfo.fX += m_fSpeed;
 		m_pImgKey = L"Player_Right";
 		m_eCurState = WALK;
 	}
-	else if (CKeyMgr::Get_Instance()->Key_Up(VK_LEFT) ||
-		CKeyMgr::Get_Instance()->Key_Up(VK_RIGHT)) // 키를 뗐을 때
+	if (CKeyMgr::Get_Instance()->Key_Up('A') ||
+		CKeyMgr::Get_Instance()->Key_Up('D')) // 키를 뗐을 때
 	{
 		m_pImgKey = L"Player_IDLE";
 		m_eCurState = IDLE; // IDLE 상태로 전환
 	}
-	else if (CKeyMgr::Get_Instance()->Key_Up(VK_SPACE))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
 	{
 		m_bJump = true;
+		m_tInfo.fY -= 0.1f;
 	}
 	else
 	{
@@ -130,27 +132,55 @@ void CPlayer::Key_Input()
 
 void CPlayer::Jumping()
 {
-	float	fY(0.f);
+	float fY(0.f);
 
-	bool	bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
+	bool bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
 
-	if (m_bJump)
+
+	
+	static float prevY = m_tInfo.fY;
+	m_fGravity = m_tInfo.fY - prevY;
+	prevY = m_tInfo.fY;
+
+	if (!m_bJump) 
 	{
-		m_tInfo.fY -= (m_fJumpPower * sinf(45.f) * m_fTime) - (9.8f * m_fTime * m_fTime) * 0.5f;
-		m_fTime += 0.2f;
+		m_tInfo.fY += 9.8f; // 중력 값 (기본적으로 하강 속도)
+	}
 
-		if (bLineCol && (fY < m_tInfo.fY))
+	if (m_bJump) // 점프 중
+	{
+		m_tInfo.fY -= (m_fJumpPower * sinf(90.f) * m_fTime) - (9.8f * m_fTime * m_fTime) * 0.5f;
+		m_fTime += 0.25f;
+
+		if (bLineCol && (m_tInfo.fY >= fY)) // 바닥과 충돌
 		{
 			m_bJump = false;
 			m_fTime = 0.f;
 			m_tInfo.fY = fY;
 		}
 	}
-	else if (bLineCol)
+	else if (bLineCol) // 바닥에 있을 때 위치 고정
 	{
 		m_tInfo.fY = fY;
 	}
 }
+void CPlayer::OnCollision(CObj* _op)
+{
+
+	switch (_op->Get_OBJID())
+	{
+	case OBJ_BLOCK:
+		m_bJump = false;
+		m_fTime = 0.f;
+		break;
+	default:
+		break;
+	}
+
+}
+
+
+
 
 void CPlayer::Offset()
 {

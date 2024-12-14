@@ -17,12 +17,12 @@ CTileMgr::~CTileMgr()
 
 void CTileMgr::Initialize()
 {
-	for (int i = 0; i < TILEY; ++i)
+	for (int i = 0; i < TILEY; ++i) // Y축으로 TILEY개만큼
 	{
-		for (int j = 0; j < TILEX; ++j)
+		for (int j = 0; j < TILEX; ++j) // X축으로 TILEX개만큼
 		{
-			float fX = (float)(j * TILECX) + (TILECX >> 1);
-			float fY = (float)(i * TILECY) + (TILECY >> 1);
+			float fX = (float)(j * TILECX) + (TILECX >> 1); //   j*TILEX + TILEX* 2분의 1
+			float fY = (float)(i * TILECY) + (TILECY >> 1); //   j*TILEY + TILEX* 2분의 1
 
 			CObj* pTile = CAbstractFactory<CTile>::Create(fX, fY);
 			m_vecTile.push_back(pTile);

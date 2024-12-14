@@ -31,7 +31,7 @@ public:
 		m_tInfo.fCY = _fCY;
 	}
 
-
+	virtual void OnCollision(CObj* _op);
 	const RENDERID Get_GroupID() const { return m_eRender; }
 
 	void		Set_PosX(float _fX) { m_tInfo.fX += _fX; }
@@ -45,7 +45,10 @@ public:
 	bool		Get_Dead() { return m_bDead; }
 
 	void		Set_ImgKey(const TCHAR* pImgKey) { m_pImgKey = pImgKey; }
+	void		Set_OBJID(OBJID eOBJID) { m_eOBJID = eOBJID; }
 
+
+	OBJID Get_OBJID(){	return m_eOBJID;}
 public:
 	virtual void		Initialize()PURE;
 	virtual int			Update()PURE;
@@ -73,5 +76,7 @@ protected:
 	CObj* m_pTarget;
 
 	const TCHAR* m_pImgKey;
+
+	OBJID m_eOBJID;
 };
 

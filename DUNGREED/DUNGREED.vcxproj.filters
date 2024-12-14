@@ -94,6 +94,15 @@
     <ClCompile Include="MoveObject.cpp">
       <Filter>01. OBJECT\MoveObject</Filter>
     </ClCompile>
+    <ClCompile Include="BoxCollider.cpp">
+      <Filter>03. DESIGN\CollisionMgr\Box</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockMgr.cpp">
+      <Filter>04. Block\BlockMgr</Filter>
+    </ClCompile>
+    <ClCompile Include="Block_01.cpp">
+      <Filter>04. Block\Block_01</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainGame.h">
@@ -204,6 +213,15 @@
     <ClInclude Include="CShield.h">
       <Filter>01. OBJECT\MoveObject\04_Shield</Filter>
     </ClInclude>
+    <ClInclude Include="BoxCollider.h">
+      <Filter>03. DESIGN\CollisionMgr\Box</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockMgr.h">
+      <Filter>04. Block\BlockMgr</Filter>
+    </ClInclude>
+    <ClInclude Include="Block_01.h">
+      <Filter>04. Block\Block_01</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DUNGREED.ico">
@@ -312,6 +330,18 @@
     </Filter>
     <Filter Include="02. SCENE\05_01-01_Stage">
       <UniqueIdentifier>{e33b666a-cedf-4573-9ce0-0ba986815186}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. DESIGN\CollisionMgr\Box">
+      <UniqueIdentifier>{e76c7763-d86d-408f-83ac-039d2a356c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Block">
+      <UniqueIdentifier>{36bb2a9a-495a-48fe-b18c-8785623a20af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Block\Block_01">
+      <UniqueIdentifier>{d9bbbb7c-02fd-4d41-a4aa-729499020847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Block\BlockMgr">
+      <UniqueIdentifier>{4932c0fd-d373-4685-a9e9-659f2349cd31}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

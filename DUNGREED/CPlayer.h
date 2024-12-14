@@ -20,13 +20,28 @@ public:
     virtual void Render(HDC hDC) override;
     virtual void Release() override;
 
+    void Set_Jump()
+    {
+        m_bJump = false;
+    }
+    float Get_Grivity()
+        {
+        return m_fGravity;
+        }
+  
+    
+    virtual void OnCollision(CObj* _op);
+
 private:
     void        Key_Input();
     void        Jumping();
     void        Offset();
+    
 
     CObj*       Create_Shield();
     void        Change_Motion();
+
+ 
 
 private:
     POINT               m_tPosin;
@@ -38,6 +53,10 @@ private:
 
     STATE               m_eCurState;
     STATE               m_ePreState;
+
+    float m_fGravity;
+    
+    float m_fGt;
 
 };
 

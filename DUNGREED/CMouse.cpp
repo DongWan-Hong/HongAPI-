@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CMouse.h"
 #include "CBmpMgr.h"
+#include "CScrollMgr.h"
 
 
 CMouse::CMouse()
@@ -18,33 +19,30 @@ CMouse::~CMouse()
 
 void CMouse::Initialize()
 {
-	m_tInfo.fCX = 63.f;
-	m_tInfo.fCY = 63.f;
+	m_tInfo.fCX = 48.f;
+	m_tInfo.fCY = 48.f;
 
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/UI/ShootingCursor2.bmp", L"Cross_Hair");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image3/Cursor/ShootingCursor_1.bmp", L"Cross_Hair");
+
+	ShowCursor(FALSE);  // Ä¿¼­¸¦ ¼û±è
 }
 
 int CMouse::Update()
 {
-	
-
-	GetCursorPos(&ptMouse);
-
-	ScreenToClient(g_hWnd, &ptMouse);
+	GetCursorPos(&ptMouse);  
+	ScreenToClient(g_hWnd, &ptMouse);  
 
 
 
-    
+
 	m_tInfo.fX = (float)ptMouse.x;
 	m_tInfo.fY = (float)ptMouse.y;
 
-
 	__super::Update_Rect();
-
-	//ShowCursor(FALSE);
 
 	return OBJ_NOEVENT;
 }
+
 
 void CMouse::Late_Update()
 {
@@ -52,30 +50,19 @@ void CMouse::Late_Update()
 
 void CMouse::Render(HDC hDC)
 {
-
-
-	HDC		hCursor = CBmpMgr::Get_Instance()->Find_Image(L"Cross_Hair");
+	HDC hCursor = CBmpMgr::Get_Instance()->Find_Image(L"Cross_Hair");
 
 	GdiTransparentBlt(hDC,
-		m_tRect.left,
-		m_tRect.top,
+		(int)m_tInfo.fX - (int)m_tInfo.fCX / 2,  
+		(int)m_tInfo.fY - (int)m_tInfo.fCY / 2,
 		(int)m_tInfo.fCX,
 		(int)m_tInfo.fCY,
 		hCursor,
-		63, 63,
-		(int)m_tInfo.fCX,
-		(int)m_tInfo.fCY,
-		RGB(255, 0, 255));
-
-
-
-
-
-	TCHAR szBuffer[64];
-	_stprintf_s(szBuffer, _T("Mouse: X=%d, Y=%d"), ptMouse.x, ptMouse.y);
-	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer));
-
+		0, 0,  
+		48.f, 48.f,  
+		RGB(255, 0, 255));  
 }
+
 
 
 void CMouse::Release()

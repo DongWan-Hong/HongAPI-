@@ -14,11 +14,16 @@
 #define	TILECX				64
 #define	TILECY				64
 
-#define TILEX				30
-#define TILEY				20
-
+#define TILEX				5
+#define TILEY				5
 
 extern HWND		g_hWnd;
+
+enum DRAWPOINT { HEAD, TAIL, DRAWPOINT_END };
+
+enum DRAWDIR { NO_DIR, HORIZONTAL, VERTICAL, DRAWDIR_END };
+
+
 
 enum DIRECTION { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_LU, DIR_RU, DIR_END };
 
@@ -125,3 +130,4 @@ public:
 		}
 	}
 };
+

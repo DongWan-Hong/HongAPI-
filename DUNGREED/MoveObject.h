@@ -2,6 +2,8 @@
 
 #include "CObj.h"
 
+
+
 class CMoveObject : public CObj
 {
 public:
@@ -11,7 +13,7 @@ public:
 private:
 
 
-	// CObj을(를) 통해 상속됨
+	
 	void Initialize() override;
 
 	int Update() override;
@@ -21,5 +23,7 @@ private:
 	void Render(HDC hDC) override;
 
 	void Release() override;
+
+
 
 };

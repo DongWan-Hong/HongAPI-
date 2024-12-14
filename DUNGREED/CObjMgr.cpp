@@ -86,7 +86,9 @@ void CObjMgr::Late_Update()
 
 	//CCollisionMgr::Collision_Rect(m_ObjList[OBJ_MONSTER], m_ObjList[OBJ_BULLET]);
 
+	//CCollisionMgr::Check_Block(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BLOCK]);
 	CCollisionMgr::Collision_RectEx(m_ObjList[OBJ_PLAYER], m_ObjList[OBJ_BLOCK]);
+
 	
 }
 
