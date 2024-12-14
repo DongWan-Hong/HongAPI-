@@ -217,13 +217,13 @@ int CBlockMgr::Update()
 		m_eDrawDir = NO_DIR;
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Down('S'))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F1))
 	{
 		Save_Block();
 		return 0;
 	}
 
-	if (CKeyMgr::Get_Instance()->Key_Down('L'))
+	if (CKeyMgr::Get_Instance()->Key_Down(VK_F2))
 	{
 		Load_Block();
 		return 0;

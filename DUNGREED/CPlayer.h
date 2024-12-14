@@ -7,7 +7,7 @@
 class CPlayer :    public CObj
 {
 public:
-    enum STATE { IDLE, WALK, ATTACK, HIT, DEAD, END };
+    enum STATE { IDLE, DOUBLEJUMP, WALK,EffECT, ATTACK, HIT, DEAD, END };
 
 public:
     CPlayer();
@@ -34,7 +34,10 @@ public:
 
 private:
     void        Key_Input();
+ 
     void        Jumping();
+    void PerformDash();
+    void StartDash(float targetX, float targetY);
     void        Offset();
     
 
@@ -55,8 +58,16 @@ private:
     STATE               m_ePreState;
 
     float m_fGravity;
-    
-    float m_fGt;
+    bool m_bDefatule_IDle;
+    bool m_bDoubleJump;
+ 
+private:
+    bool m_bDashing;       // 대쉬 중인지 여부
+    float m_fDash_Mouse_X;  // 대쉬 목표 지점 X
+    float m_fDash_Mouse_Y;  // 대쉬 목표 지점 Y
+    float m_fDashSpeed;    // 대쉬 속도
 
+    float m_fFixScrollSpeedX; // 대쉬속도를 감당해줄 변수
+    float m_fFixScrollSpeedY;
 };
 

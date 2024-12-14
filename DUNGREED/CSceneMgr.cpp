@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CSceneMgr.h"
+#include "Stage_00.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 
@@ -33,6 +34,10 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 
 		case SC_EDIT:
 			m_pScene = new CMyEdit;
+			break;
+
+		case SC_Test:
+			m_pScene = new CStage_00;
 			break;
 
 		case SC_STAGE:

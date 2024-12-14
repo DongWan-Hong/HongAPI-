@@ -13,7 +13,7 @@
 
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount64()), m_iFPS(0)
+	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }
@@ -29,7 +29,6 @@ void CMainGame::Initialize()
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Ground.bmp", L"Back");
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_MOUSE, CAbstractFactory<CMouse>::Create()); 
-	CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(570.f, 1000, 0.f));
 	CSceneMgr::Get_Instance()->Set_Scene(SC_LOGO);
 }
 

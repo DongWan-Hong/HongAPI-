@@ -1,11 +1,11 @@
 #pragma once
 
 #include "CScene.h"
-
 #include "CLogo.h"
 #include "CMyMenu.h"
 #include "CStage.h"
 #include "CMyEdit.h"
+#include "Define.h"
 
 class CSceneMgr
 {

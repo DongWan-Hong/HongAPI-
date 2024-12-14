@@ -21,10 +21,10 @@ void CMyMenu::Initialize()
 
 
 
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/GameStart1.Bmp", L"Start");
-   //CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image/Button/Start.bmp", L"Start");
-   CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/Edit.bmp", L"Edit");
-    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/Quit1.Bmp", L"Exit");
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/GameStart1.Bmp", L"Start"); // 게임시작
+   CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/Edit.bmp", L"Edit"); // 블럭에딧
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/Quit1.Bmp", L"Exit"); // 종료
+    CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image2/StartScene/Tset.Bmp", L"Test"); // 테스트맵
 
 
     CObj* pButton = CAbstractFactory<CMyButton>::Create(520.f, 500.f);
@@ -38,6 +38,13 @@ void CMyMenu::Initialize()
     pButton = CAbstractFactory<CMyButton>::Create(520.f, 600.f);
     pButton->Set_ImgKey(L"Exit");
     CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
+
+    pButton = CAbstractFactory<CMyButton>::Create(720.f, 600.f);
+    pButton->Set_ImgKey(L"Test");
+    CObjMgr::Get_Instance()->Add_Object(OBJ_BUTTON, pButton);
+
+
+
 }
 
 int CMyMenu::Update()

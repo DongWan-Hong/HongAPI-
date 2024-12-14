@@ -31,12 +31,9 @@ void CStage::Initialize()
 
 	for (int i = 2; i < 10; i++) // 블럭 크기는 180
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(i*50.f, 1200.f, 0.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(i*50.f, 1168.f, 0.f));
 	}
 	
-
-
-
 
 	//CTileMgr::Get_Instance()->Initialize();
 	CBlockMgr::Get_Instance()->Initialize();
@@ -61,15 +58,13 @@ void CStage::Late_Update()
 void CStage::Render(HDC hDC)
 {
 
+	HDC hGroudkDC = CBmpMgr::Get_Instance()->Find_Image(L"Ground3");
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	HDC hBack1DC = CBmpMgr::Get_Instance()->Find_Image(L"Back1");
 	HDC hBack2DC = CBmpMgr::Get_Instance()->Find_Image(L"Back2");
 	HDC hBack3DC = CBmpMgr::Get_Instance()->Find_Image(L"Back3");
-
-	HDC hGroudkDC = CBmpMgr::Get_Instance()->Find_Image(L"Ground3");
-	
 	//StretchBlt(hDC,
 	//	iScrollX,
 	//	iScrollY+700,
@@ -92,84 +87,84 @@ void CStage::Render(HDC hDC)
 	GdiTransparentBlt(hDC,			
 		0,
 		200,
-		1280.f,			 // 받아올 이미지 어떻게 할껀지
-		568.f,
+		1280,			 // 받아올 이미지 어떻게 할껀지
+		568,
 		hBack2DC,
 		0,			  // 이미지 좌표
 		0,
-		1280.f,			// 복사할 이미지의 가로, 세로
-		568.f,
+		1280,			// 복사할 이미지의 가로, 세로
+		568,
 		RGB(255, 0, 255));
 
 	GdiTransparentBlt(hDC,
 		iScrollX,
 		iScrollY+900,
-		1280.f,			 // 받아올 이미지 어떻게 할껀지
-		380.f,
+		1280,			 // 받아올 이미지 어떻게 할껀지
+		380,
 		hBack3DC,
 		0,			  // 이미지 좌표
 		0,
-		1280.f,			// 복사할 이미지의 가로, 세로
-		380.f,
+		1280,			// 복사할 이미지의 가로, 세로
+		380,
 		RGB(255, 0, 255));
 
 	GdiTransparentBlt(hDC,
 		iScrollX+1280,
 		iScrollY + 900,
-		1280.f,			 // 받아올 이미지 어떻게 할껀지
-		380.f,
+		1280,			 // 받아올 이미지 어떻게 할껀지
+		380,
 		hBack3DC,
 		0,			  // 이미지 좌표
 		0,
-		1280.f,			// 복사할 이미지의 가로, 세로
-		380.f,
+		1280,			// 복사할 이미지의 가로, 세로
+		380,
 		RGB(255, 0, 255));
 
 	GdiTransparentBlt(hDC,
 		iScrollX + 1280*2,
 		iScrollY + 900,
-		1280.f,			 // 받아올 이미지 어떻게 할껀지
-		380.f,
+		1280,			 // 받아올 이미지 어떻게 할껀지
+		380,
 		hBack3DC,
 		0,			  // 이미지 좌표
 		0,
-		1280.f,			// 복사할 이미지의 가로, 세로
-		380.f,
+		1280,			// 복사할 이미지의 가로, 세로
+		380,
 		RGB(255, 0, 255));
 	GdiTransparentBlt(hDC,
 		iScrollX + 1280 * 3,
 		iScrollY + 900,
-		1280.f,			 // 받아올 이미지 어떻게 할껀지
-		380.f,
+		1280,			 // 받아올 이미지 어떻게 할껀지
+		380,
 		hBack3DC,
 		0,			  // 이미지 좌표
 		0,
-		1280.f,			// 복사할 이미지의 가로, 세로
-		380.f,
+		1280,			// 복사할 이미지의 가로, 세로
+		380,
 		RGB(255, 0, 255));
 	GdiTransparentBlt(hDC,
 		iScrollX + 1280 * 4,
 		iScrollY + 900,
-		1280.f,			 // 받아올 이미지 어떻게 할껀지
-		380.f,
+		1280,			 // 받아올 이미지 어떻게 할껀지
+		380,
 		hBack3DC,
 		0,			  // 이미지 좌표
 		0,
-		1280.f,			// 복사할 이미지의 가로, 세로
-		380.f,
+		1280,			// 복사할 이미지의 가로, 세로
+		380,
 		RGB(255, 0, 255));
 
 
 	GdiTransparentBlt(hDC,
 		iScrollX,
 		iScrollY-200,
-		7616.f,			 // 받아올 이미지 어떻게 할껀지
-		1536.f,
+		7616,			 // 받아올 이미지 어떻게 할껀지
+		1536,
 		hGroudkDC,
 		0,			  // 이미지 좌표
 		0,
-		7616.f,			// 복사할 이미지의 가로, 세로
-		1536.f,
+		7616,			// 복사할 이미지의 가로, 세로
+		1536,
 		RGB(255,255, 255));
 
 	// 제거할 색상

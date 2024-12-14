@@ -17,6 +17,8 @@
 #define TILEX				5
 #define TILEY				5
 
+#define ADD_BMP(file, name)   CBmpMgr::Get_Instance()->Insert_Bmp(file, name); 
+
 extern HWND		g_hWnd;
 
 enum DRAWPOINT { HEAD, TAIL, DRAWPOINT_END };
@@ -31,7 +33,7 @@ enum DIRECTION { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_LU, DIR_RU, DIR_END 
 
 enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
 
-enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_STAGE, SC_END };
+enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_Test,SC_STAGE,SC_END };
 
 
 enum BLOCKTYPE { BLOCK1, BLOCK2, BLOCK3, BLOCK4, BLOCK5, BLOCKTYPE_END };
@@ -85,8 +87,8 @@ typedef struct tagFrame
 	int		iFrameStart;
 	int		iFrameEnd;
 	int		iMotion;
-	DWORD	dwSpeed;
-	DWORD	dwTime;
+	ULONGLONG	dwSpeed;
+	ULONGLONG	dwTime;
 
 }FRAME;
 

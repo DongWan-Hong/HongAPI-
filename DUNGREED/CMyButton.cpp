@@ -46,8 +46,13 @@ void CMyButton::Late_Update()
 			else if (!lstrcmp(L"Edit", m_pImgKey))
 				CSceneMgr::Get_Instance()->Set_Scene(SC_EDIT);
 
+				else if (!lstrcmp(L"Test", m_pImgKey))
+				CSceneMgr::Get_Instance()->Set_Scene(SC_Test);
+
 			else if (!lstrcmp(L"Exit", m_pImgKey))
 				DestroyWindow(g_hWnd);
+
+			
 
 			return;
 		}

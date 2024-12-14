@@ -73,9 +73,6 @@
     <ClCompile Include="CMyMenu.cpp">
       <Filter>02. SCENE\01_Menu</Filter>
     </ClCompile>
-    <ClCompile Include="CStage.cpp">
-      <Filter>02. SCENE\03_Tuto_Stage</Filter>
-    </ClCompile>
     <ClCompile Include="CTile.cpp">
       <Filter>03. DESIGN\TileMgr\Tile</Filter>
     </ClCompile>
@@ -102,6 +99,12 @@
     </ClCompile>
     <ClCompile Include="Block_01.cpp">
       <Filter>04. Block\Block_01</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage.cpp">
+      <Filter>02. SCENE\04_Vilage</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage_00.cpp">
+      <Filter>02. SCENE\03_Test_Stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +180,6 @@
     <ClInclude Include="CMyMenu.h">
       <Filter>02. SCENE\01_Menu</Filter>
     </ClInclude>
-    <ClInclude Include="CStage.h">
-      <Filter>02. SCENE\03_Tuto_Stage</Filter>
-    </ClInclude>
     <ClInclude Include="CTile.h">
       <Filter>03. DESIGN\TileMgr\Tile</Filter>
     </ClInclude>
@@ -221,6 +221,12 @@
     </ClInclude>
     <ClInclude Include="Block_01.h">
       <Filter>04. Block\Block_01</Filter>
+    </ClInclude>
+    <ClInclude Include="CStage.h">
+      <Filter>02. SCENE\04_Vilage</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage_00.h">
+      <Filter>02. SCENE\03_Test_Stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -322,9 +328,6 @@
     <Filter Include="03. DESIGN\TileMgr\Tile">
       <UniqueIdentifier>{fcb62bc9-54ac-41d3-954b-aedccdec0642}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02. SCENE\03_Tuto_Stage">
-      <UniqueIdentifier>{1e390aec-c8a7-45b3-93cf-7c927d5454a0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. SCENE\04_Vilage">
       <UniqueIdentifier>{b7eeb4b4-579a-4496-8de5-9d60f879ac8c}</UniqueIdentifier>
     </Filter>
@@ -342,6 +345,9 @@
     </Filter>
     <Filter Include="04. Block\BlockMgr">
       <UniqueIdentifier>{4932c0fd-d373-4685-a9e9-659f2349cd31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. SCENE\03_Test_Stage">
+      <UniqueIdentifier>{1e390aec-c8a7-45b3-93cf-7c927d5454a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
