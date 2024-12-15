@@ -2,10 +2,12 @@
 #include "CMouse.h"
 #include "CBmpMgr.h"
 #include "CScrollMgr.h"
+#include "CPlayer.h"
 
 
 CMouse::CMouse()
 {
+	ZeroMemory(&m_Mouse, sizeof(m_Mouse));
 	ptMouse={};
 	m_MouseX = 0;
 	m_MouseY = 0;
@@ -23,6 +25,7 @@ void CMouse::Initialize()
 	m_tInfo.fCY = 48.f;
 
 	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image3/Cursor/ShootingCursor_1.bmp", L"Cross_Hair");
+	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image3/Cursor/BasicCursor1.bmp", L"Default_Cursor");
 
 	ShowCursor(FALSE);  // Ä¿¼­¸¦ ¼û±è
 }
@@ -53,17 +56,34 @@ void CMouse::Render(HDC hDC)
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC hCursor = CBmpMgr::Get_Instance()->Find_Image(L"Cross_Hair");
+	
 
-	GdiTransparentBlt(hDC,
-		(int)m_tInfo.fX - (int)m_tInfo.fCX / 2,
-		(int)m_tInfo.fY - (int)m_tInfo.fCY / 2,
-		(int)m_tInfo.fCX,
-		(int)m_tInfo.fCY,
-		hCursor,
-		0, 0,  
-		48.f, 48.f,  
-		RGB(255, 0, 255));  
+	if (CPlayer::m_bInven == false)
+	{
+		HDC hCross = CBmpMgr::Get_Instance()->Find_Image(L"Cross_Hair");
+		GdiTransparentBlt(hDC,
+			(int)m_tInfo.fX - (int)m_tInfo.fCX / 2,
+			(int)m_tInfo.fY - (int)m_tInfo.fCY / 2,
+			(int)m_tInfo.fCX,
+			(int)m_tInfo.fCY,
+			hCross,
+			0, 0,
+			(int)48.f, (int)48.f,
+			RGB(255, 0, 255));
+	}
+	if (CPlayer::m_bInven == true)
+	{
+		HDC hCursor = CBmpMgr::Get_Instance()->Find_Image(L"Default_Cursor");
+		GdiTransparentBlt(hDC,
+			(int)m_tInfo.fX - (int)m_tInfo.fCX / 2,
+			(int)m_tInfo.fY - (int)m_tInfo.fCY / 2,
+			(int)m_tInfo.fCX,
+			(int)m_tInfo.fCY,
+			hCursor,
+			0, 0,
+			(int)76.f, (int)76.f,
+			RGB(255, 0, 255));
+	}
 
 
 	TCHAR szBuffer[64];
@@ -72,7 +92,7 @@ void CMouse::Render(HDC hDC)
 
 	SetTextColor(hDC, RGB(255, 255, 255)); 
 	SetBkMode(hDC, TRANSPARENT);          
-	TextOut(hDC, 10, 10, szBuffer, _tcslen(szBuffer)); 
+	TextOut(hDC, 10, 10, szBuffer, (int)_tcslen(szBuffer)); 
 }
 
 

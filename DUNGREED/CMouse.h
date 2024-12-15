@@ -24,6 +24,5 @@ private:
 	ULONGLONG m_dwTime;
 
 	POINT       ptMouse;
-
 };
 

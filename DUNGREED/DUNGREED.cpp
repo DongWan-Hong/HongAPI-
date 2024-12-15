@@ -47,7 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     // GDI+ 초기화
     InitGDIPlus();
 
-    // 전역 문자열 초기화
+  
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_DEFAULTWINDOW, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
@@ -91,7 +91,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
-    // GDI+ 종료
+   
     ShutdownGDIPlus();
 
     return (int)msg.wParam;

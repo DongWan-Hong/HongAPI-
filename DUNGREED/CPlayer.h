@@ -27,8 +27,11 @@ public:
         {
         return m_fGravity;
         }
-  
-    
+    bool Get_InvenCheck() // 마우스 커서 바꾸려고
+    {
+        return m_bInven;
+    }
+    static bool m_bInven;
     virtual void OnCollision(CObj* _op);
 
 private:
@@ -42,8 +45,9 @@ private:
 
     CObj*       Create_Shield();
     void        Change_Motion();
+   
 
- 
+
 
 private:
     POINT               m_tPosin;
@@ -58,7 +62,7 @@ private:
 
     float m_fGravity;
     bool m_bDefatule_IDle;
-    bool m_bDoubleJump;
+    //bool m_bDoubleJump;
  
 private:
     bool m_bDashing;       // 대쉬 중인지 여부
@@ -71,5 +75,6 @@ private:
 
     vector<Trail> m_vTrails;
 
+  
 };
 

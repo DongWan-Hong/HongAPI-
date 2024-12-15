@@ -21,7 +21,7 @@
 #define FIND_BMP(key) CBmpMgr::Get_Instance()->Find_Image(key)
 
 extern HWND		g_hWnd;
-
+extern bool m_bInven;
 enum DRAWPOINT { HEAD, TAIL, DRAWPOINT_END };
 enum DRAWDIR { NO_DIR, HORIZONTAL, VERTICAL, DRAWDIR_END };
 enum DIRECTION { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_LU, DIR_RU, DIR_END };
@@ -47,11 +47,11 @@ struct Trail
 
 enum OBJID 
 { 
+	OBJ_MOUSE,
+	OBJ_BLOCK,
 	OBJ_PLAYER,
 	OBJ_BULLET, 
-	OBJ_BLOCK,
 	OBJ_MONSTER, 
-	OBJ_MOUSE, 
 	OBJ_SHIELD, 
 	OBJ_BUTTON,
 	OBJ_END 

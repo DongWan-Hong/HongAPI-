@@ -8,15 +8,17 @@
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
 
-CPlayer::CPlayer()
-	: m_bJump(false), m_fJumpPower(0.f), m_fTime(0.f),m_bDefatule_IDle(true), m_bDoubleJump(0)
+bool CPlayer::m_bInven = false;
 
+CPlayer::CPlayer()
+	: m_bJump(false), m_fJumpPower(0.f), m_fTime(0.f),m_bDefatule_IDle(true)
 {
 	m_fGravity = 0.f;
 	ZeroMemory(&m_tPosin, sizeof(POINT));
 	ZeroMemory(&m_eCurState,sizeof(STATE));
 	ZeroMemory(&m_ePreState,sizeof(STATE));
 	m_bDashing = false;      
+	m_bInven = false;
 	m_fDash_Mouse_X = 0.f;
 	m_fDash_Mouse_Y = 0.f;
 	m_fDashSpeed = 25.f;     // 대쉬 속도
@@ -151,7 +153,7 @@ void CPlayer::Render(HDC hDC)
 			Image image(L"../Image2/player/baseCharEffect_Left1.bmp");
 
 	
-			BYTE alpha = (BYTE)(trail.alpha * 100);
+			BYTE alpha = (BYTE)(trail.alpha);
 
 		
 			ImageAttributes imgAttributes;
@@ -191,7 +193,7 @@ void CPlayer::Render(HDC hDC)
 
 	if (m_pImgKey == (L"Player_Right") || m_pImgKey == (L"Player_Left") && m_bJump == false)
 	{
-
+		Image image(L"../Image2/player/baseCharEffect_Left1.bmp");
 		HDC hEffectDC = FIND_BMP(L"Run_Effect");
 
 		GdiTransparentBlt(hDC,
@@ -205,51 +207,46 @@ void CPlayer::Render(HDC hDC)
 			RGB(255, 0, 255));
 	}
 
-	//if (m_bDashing)
-	//{
-	//	HDC hEffectDC = FIND_BMP(L"Right_Dash");
+	if (m_bInven == true)
+	{
+		Graphics graphics(hDC);
 
-	//	GdiTransparentBlt(hDC,
-	//		(int)m_tInfo.fX + iScrollX ,
-	//		(int)m_tInfo.fY + iScrollY-40,
-	//		102, 100,  // 효과 크기
-	//		hEffectDC,
-	//		(int)m_tInfo.fCX * m_tFrame.iFrameStart,
-	//		(int)m_tInfo.fCY * m_tFrame.iMotion,
-	//		102, 100,
-	//		RGB(255, 0, 255));
-	//}
-	//else if (m_bDashing && (m_pImgKey == (L"Player_Left")))
-	//{
-	//	HDC hEffectDC = FIND_BMP(L"Left_Dash");
-
-	//	GdiTransparentBlt(hDC,
-	//		(int)m_tInfo.fX + iScrollX - 50,
-	//		(int)m_tInfo.fY + iScrollY,
-	//		60, 75,  // 효과 크기
-	//		hEffectDC,
-	//		(int)m_tInfo.fCX * m_tFrame.iFrameStart,
-	//		(int)m_tInfo.fCY * m_tFrame.iMotion,
-	//		60, 75,
-	//		RGB(255, 0, 255));
+		Image Inven(L"../Image3/Inventory/InventoryBase2.png");
 
 
-	//}
+		ImageAttributes imgAttributes;
+		Color transparentColor(255, 255, 0, 255);
+		imgAttributes.SetColorKey(transparentColor, transparentColor);
+
+		// 이미지 출력
+		graphics.DrawImage(
+			&Inven,
+			Rect(WINCX - 405,  // 화면 오른쪽에 고정 (10px 여백)
+				WINCY-700, // 세로 중앙 정렬
+				492, 752),         // 이미지 크기
+			0, 0, 492, 752,
+			UnitPixel, &imgAttributes);
+	}
+
 
 	TCHAR szBuffer[128];
-	_stprintf_s(szBuffer, _T("Jump: %d, Dash: %d"), m_bJump, m_bDoubleJump); // 점프 여부 확인 나중에 게이지로 바꿀꺼임
-
+	_stprintf_s(szBuffer, _T("Jump: %d, Dash: %d"), m_bJump, m_bDashing); // 점프 여부 확인 나중에 게이지로 바꿀꺼임
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 100, 100, szBuffer, _tcslen(szBuffer));
 
 	TCHAR szBuffer2[64];
 	_stprintf_s(szBuffer2, _T("Plyer: X=%d, Y=%d"), (int)m_tInfo.fX - iScrollX, (int)m_tInfo.fY - iScrollY);
-
-
 	SetTextColor(hDC, RGB(255, 255, 255));
 	SetBkMode(hDC, TRANSPARENT);
 	TextOut(hDC, 200, 10, szBuffer2, _tcslen(szBuffer2));
+
+	TCHAR szBuffer3[128];
+	_stprintf_s(szBuffer3, _T("Inven: %d"), m_bInven); // 점프 여부 확인 나중에 게이지로 바꿀꺼임
+	SetTextColor(hDC, RGB(255, 255, 255));
+	SetBkMode(hDC, TRANSPARENT);
+	TextOut(hDC, 100, 200, szBuffer3, _tcslen(szBuffer3));
+
 }
 
 void CPlayer::Release()
@@ -270,39 +267,50 @@ void CPlayer::Key_Input()
 	bool bMouseRight = (ptMouse.x - iScrollX > m_tInfo.fX);
 
 	m_pImgKey = bMouseRight ? L"Player_IDLE_Right" : L"Player_IDLE_Left";
-
-	if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
+	if (m_bInven == false)
 	{
-		m_tInfo.fX -= m_fSpeed;
-		m_eCurState = WALK;
-		m_pImgKey = bMouseRight ? L"Player_Right" : L"Player_Left";
-	}
-	if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
-	{
-		m_tInfo.fX += m_fSpeed;
-		m_eCurState = WALK;
-		m_pImgKey = bMouseRight ? L"Player_Right" : L"Player_Left";
-	}
-	if (CKeyMgr::Get_Instance()->Key_Up('A') || CKeyMgr::Get_Instance()->Key_Up('D'))
-	{
-		m_pImgKey = bMouseRight ? L"Player_IDLE_Right" : L"Player_IDLE_Left";
-		m_eCurState = IDLE;
-	}
-	if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
-	{
-		if (!m_bJump && !m_bDashing) // 대쉬 중이 아닐 때만 점프 가능
+		if (CKeyMgr::Get_Instance()->Key_Pressing('A'))
 		{
-			m_bJump = true;
-			m_tInfo.fY -= m_fJumpPower;
+			m_tInfo.fX -= m_fSpeed;
+			m_eCurState = WALK;
+			m_pImgKey = bMouseRight ? L"Player_Right" : L"Player_Left";
+		}
+		if (CKeyMgr::Get_Instance()->Key_Pressing('D'))
+		{
+			m_tInfo.fX += m_fSpeed;
+			m_eCurState = WALK;
+			m_pImgKey = bMouseRight ? L"Player_Right" : L"Player_Left";
+		}
+		if (CKeyMgr::Get_Instance()->Key_Up('A') || CKeyMgr::Get_Instance()->Key_Up('D'))
+		{
+			m_pImgKey = bMouseRight ? L"Player_IDLE_Right" : L"Player_IDLE_Left";
+			m_eCurState = IDLE;
+		}
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_SPACE))
+		{
+			if (!m_bJump && !m_bDashing) // 대쉬 중이 아닐 때만 점프 가능
+			{
+				m_bJump = true;
+				m_tInfo.fY -= m_fJumpPower;
+			}
+		}
+		if (CKeyMgr::Get_Instance()->Key_Up('A') || CKeyMgr::Get_Instance()->Key_Up('D'))
+		{
+			m_pImgKey = bMouseRight ? L"Player_IDLE_Right" : L"Player_IDLE_Left";
+			m_eCurState = IDLE;
+		}
+		if ((GetAsyncKeyState(VK_RBUTTON) & 0x8000) && !m_bDashing) // 마우스 우클릭으로 대쉬
+		{
+			StartDash(ptMouse.x - iScrollX, ptMouse.y - iScrollY);
+			m_bJump = false;
+			m_eCurState = DASH;
 		}
 	}
-
-	if ((GetAsyncKeyState(VK_RBUTTON) & 0x8000) && !m_bDashing) // 마우스 우클릭으로 대쉬
+	if (CKeyMgr::Get_Instance()->Key_Down('I'))
 	{
-		StartDash(ptMouse.x - iScrollX, ptMouse.y - iScrollY);
-		m_bJump = false;
-		m_eCurState = DASH;
+		m_bInven = !m_bInven;
 	}
+	
 }
 
 

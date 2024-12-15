@@ -28,9 +28,8 @@ void CStage_00::Initialize()
 	ADD_BMP(L"../Image3/UI/Keyboard_S2.bmp", L"Key_S");
 
 	ADD_BMP(L"../Image3/UI/Keyboard_Plus1.bmp", L"Key_Plus");
-
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
-
+	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 
 	//CBlockMgr::Get_Instance()->Initialize();
 
@@ -120,6 +119,7 @@ void CStage_00::Render(HDC hDC)
 
 
 	CObjMgr::Get_Instance()->Render(hDC);
+
 	//CBlockMgr::Get_Instance()->Render(hDC);
 
 }

@@ -17,6 +17,8 @@ CSceneMgr::~CSceneMgr()
 
 void CSceneMgr::Set_Scene(SCENEID eID)
 {
+	
+
 	m_eCurScene = eID;
 
 	if (m_ePreScene != m_eCurScene)
