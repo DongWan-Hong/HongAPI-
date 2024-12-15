@@ -9,6 +9,10 @@
 
 // 여기에 미리 컴파일하려는 헤더 추가
 #include "framework.h"
+#include "ole2.h"
+
+#include "gdiplus.h"
+#pragma comment(lib,"gdiplus")
 
 #include <list>
 #include <algorithm>
@@ -30,6 +34,8 @@
 #endif
 #endif
 
+
 using namespace std;
+using namespace Gdiplus;
 
 #endif //PCH_H

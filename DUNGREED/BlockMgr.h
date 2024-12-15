@@ -18,7 +18,8 @@ public:
 	void	Release();
 
 	void	Save_Block();
-	void	Load_Block();
+	void Load_Block();
+	void	Load_Block(LPCWSTR _FilePath);
 
 	CObj* Create_Block(INFO* _tInfo);
 public:

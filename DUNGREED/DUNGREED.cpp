@@ -6,6 +6,7 @@
 #include "DUNGREED.h"
 #include "CMainGame.h"
 
+
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
@@ -14,70 +15,70 @@ WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 HWND g_hWnd;
 
+ULONG_PTR gdiplusToken;
+void InitGDIPlus()
+{
+    GdiplusStartupInput gdiplusStartupInput;
+    GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+}
+
+void ShutdownGDIPlus()
+{
+    GdiplusShutdown(gdiplusToken);
+}
+
+
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);   // 창의 외형적인 스타일을 지정하는 옵션 함수
 BOOL                InitInstance(HINSTANCE, int);           // 창 초기화 함수
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);    // 윈도우 메시지 처리기 함수
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
-int APIENTRY wWinMain(_In_ HINSTANCE hInstance,         // 현재 프로그램의 고유 식별 번호
-                     _In_opt_ HINSTANCE hPrevInstance,  // 전에 실행되었던 인스턴스의 핸들(없을 경우 NULL)
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)           // 창의 스타일(모양 / 최소화 또는 최대한 모양)
+int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
-    // TODO: 여기에 코드를 입력합니다.
+    // GDI+ 초기화
+    InitGDIPlus();
 
-    // 전역 문자열을 초기화합니다.
+    // 전역 문자열 초기화
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_DEFAULTWINDOW, szWindowClass, MAX_LOADSTRING);
     MyRegisterClass(hInstance);
 
-    // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
+    if (!InitInstance(hInstance, nCmdShow))
     {
         return FALSE;
     }
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_DEFAULTWINDOW));
-
     MSG msg;
     msg.message = WM_NULL;
 
-    CMainGame       MainGame;
+    CMainGame MainGame;
     MainGame.Initialize();
 
+    ULONG64 dwTime = GetTickCount64();
 
-    ULONG64       dwTime = GetTickCount64();
-
-    // 기본 메시지 루프입니다:
     while (true)
     {
-        // PeekMessage : 시스템 메세지 큐로부터 메세지를 읽어오면 TRUE, 읽어올 메세지가 없을 경우 FALSE
-
-        // PM_REMOVE       : 메세지를 읽어옴과 동시에 메세지 제거
-        // PM_NOREMOVE     : 메세지 큐에 메세지가 있는지 파악, 메세지가 있을 경우, GetMessage를 호출하여 true처리
-
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
             if (WM_QUIT == msg.message)
                 break;
 
-            // 메뉴 기능의 단축키가 제대로 작동하도록 검사하는 함수
             if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
             {
-                // 키보드 메세지를 가공하여 프로그램에서 쉽게 사용할 수 있도록 하는 함수
                 TranslateMessage(&msg);
-
-                // 시스템 메세지 큐에서 꺼낸 메세지를 프로그램의 메세지 처리기에게 전달하는 함수
                 DispatchMessage(&msg);
             }
         }
-
         else
         {
             if (dwTime + 10 < GetTickCount64())
@@ -85,16 +86,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,         // 현재 프로그램�
                 MainGame.Update();
                 MainGame.Late_Update();
                 MainGame.Render();
-            
                 dwTime = GetTickCount64();
-            }          
-
-            //MainGame.Update();
-            //MainGame.Render();
-        }      
+            }
+        }
     }
 
-    return (int) msg.wParam;
+    // GDI+ 종료
+    ShutdownGDIPlus();
+
+    return (int)msg.wParam;
 }
 
 

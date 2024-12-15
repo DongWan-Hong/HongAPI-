@@ -21,22 +21,17 @@ CStage_00::~CStage_00()
 
 void CStage_00::Initialize()
 {
-	CBmpMgr::Get_Instance()->Insert_Bmp(L"../Image3/Town/SkyDay.bmp", L"Back1"); // 맨뒤의 하늘
+	ADD_BMP(L"../Image3/Dungeon/SubBG2.bmp", L"Back1");
 
+	ADD_BMP(L"../Image3/UI/Keyboard_Space2.bmp", L"Key_SapceBar");
+
+	ADD_BMP(L"../Image3/UI/Keyboard_S2.bmp", L"Key_S");
+
+	ADD_BMP(L"../Image3/UI/Keyboard_Plus1.bmp", L"Key_Plus");
 
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 
-	for (int i = 2; i < 30; i++) // 블럭 크기는 180
-	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(i * 50.f, 1175.f, 0.f));
-	}
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(500.f, 1060.f, 0.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(550.f, 1060.f, 0.f));
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(600.f, 1060.f, 0.f));
 
-
-
-	//CTileMgr::Get_Instance()->Initialize();
 	//CBlockMgr::Get_Instance()->Initialize();
 
 }
@@ -60,29 +55,69 @@ void CStage_00::Render(HDC hDC)
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC hBack1DC = CBmpMgr::Get_Instance()->Find_Image(L"Back1");
+
+
+	HDC hBack1DC = FIND_BMP(L"Back1");
+
+	HDC h_Space_DC = FIND_BMP(L"Key_SapceBar");
+
+	HDC h_Space_DC2 = FIND_BMP(L"Key_SapceBar");
+
+	HDC hKey_S_DC = FIND_BMP(L"Key_S");
+
+	HDC hKey_Plus_DC = FIND_BMP(L"Key_Plus");
+
+	BitBlt(hDC,
+		0, 0, WINCX, WINCY,
+		hBack1DC,
+		0,
+		0,
+		SRCCOPY);
 
 
 
-StretchBlt(hDC,
-	0,
-	0,
-	1280,  // 확대된 가로 크기
-	900,   // 확대된 세로 크기
-	hBack1DC,
-	0,
-	0,
-	1280,      // 원본 이미지 가로 크기
-	720,       // 원본 이미지 세로 크기
-	SRCCOPY);  // 복사 방식    // 제거할 색상
+	GdiTransparentBlt(hDC,
+		 iScrollX+700,
+		 iScrollY+900,
+		186, 84,  // 효과 크기
+		h_Space_DC,
+		0,
+		0,
+		186, 84,
+		RGB(255, 255, 255));
+
+	GdiTransparentBlt(hDC,
+		iScrollX + 2330,
+		iScrollY + 705,
+		65, 70,  // 효과 크기
+		hKey_S_DC,
+		0,
+		0,
+		65, 70,
+		RGB(255, 255, 255));
+
+	GdiTransparentBlt(hDC,
+		iScrollX + 2450,
+		iScrollY + 700,
+		186, 84,  // 효과 크기
+		h_Space_DC2,
+		0,
+		0,
+		186, 84,
+		RGB(255, 255, 255));
 
 
+	GdiTransparentBlt(hDC,
+		iScrollX + 2390,
+		iScrollY + 710,
+		60, 60,  // 효과 크기
+		hKey_Plus_DC,
+		0,
+		0,
+		60, 60,
+		RGB(255, 255, 255));
 
-  
 
-	
-
-	
 
 	CObjMgr::Get_Instance()->Render(hDC);
 	//CBlockMgr::Get_Instance()->Render(hDC);

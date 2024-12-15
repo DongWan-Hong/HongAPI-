@@ -18,25 +18,31 @@
 #define TILEY				5
 
 #define ADD_BMP(file, name)   CBmpMgr::Get_Instance()->Insert_Bmp(file, name); 
+#define FIND_BMP(key) CBmpMgr::Get_Instance()->Find_Image(key)
 
 extern HWND		g_hWnd;
 
 enum DRAWPOINT { HEAD, TAIL, DRAWPOINT_END };
-
 enum DRAWDIR { NO_DIR, HORIZONTAL, VERTICAL, DRAWDIR_END };
-
-
-
 enum DIRECTION { DIR_LEFT, DIR_RIGHT, DIR_UP, DIR_DOWN, DIR_LU, DIR_RU, DIR_END };
-
 
 
 enum RENDERID { RENDER_BACKGROUND, RENDER_GAMEOBJECT, RENDER_UI, RENDER_EFFECT, RENDER_END };
 
 enum SCENEID { SC_LOGO, SC_MENU, SC_EDIT, SC_Test,SC_STAGE,SC_END };
 
-
 enum BLOCKTYPE { BLOCK1, BLOCK2, BLOCK3, BLOCK4, BLOCK5, BLOCKTYPE_END };
+
+enum ITEMTYPE { IT_WEAPON, IT_SHIELD, IT_END };
+
+enum STATE { EQUIP, UNEQUIP, ST_END };
+
+struct Trail 
+{
+	float x, y;       // 잔상의 위치
+	float alpha;      // 잔상의 투명도
+	DWORD startTime;  // 잔상 생성 시간
+};
 
 
 enum OBJID 

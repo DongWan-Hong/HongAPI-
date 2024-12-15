@@ -182,3 +182,6 @@ void CStage::Release()
 	CTileMgr::Get_Instance()->Destroy_Instance();
 	CObjMgr::Get_Instance()->Delete_ID(OBJ_PLAYER);
 }
+
+
+

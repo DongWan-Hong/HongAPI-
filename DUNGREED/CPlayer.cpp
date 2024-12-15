@@ -19,7 +19,7 @@ CPlayer::CPlayer()
 	m_bDashing = false;      
 	m_fDash_Mouse_X = 0.f;
 	m_fDash_Mouse_Y = 0.f;
-	m_fDashSpeed = 30.f;     // 대쉬 속도
+	m_fDashSpeed = 25.f;     // 대쉬 속도
 	m_fFixScrollSpeedX = 30.f;
 	m_fFixScrollSpeedY = 30.f;
 }
@@ -39,12 +39,17 @@ void CPlayer::Initialize()
 
 
 	ADD_BMP(L"../Image2/Player/baseCharIdle3.bmp", L"Player_IDLE_Right"); 
+
 	ADD_BMP(L"../Image2/Player/baseCharIdleLeft3.bmp", L"Player_IDLE_Left"); 
 	ADD_BMP(L"../Image2/Player/baseCharRun2.bmp", L"Player_Right"); 
 	ADD_BMP(L"../Image2/Player/Dir/Left2.bmp", L"Player_Left"); 
-	ADD_BMP(L"../Image2/Player/RunEffect2.bmp", L"Run_Effect"); 
 
-	ADD_BMP(L"../Image2/Player/RunEffect2.bmp", L"")
+	ADD_BMP(L"../Image2/Player/RunEffect1.bmp", L"Run_Effect"); 
+
+	//ADD_BMP(L"../Image3/Weapon/BasicShortSword.bmp", L"Player_Sword")
+
+	ADD_BMP(L"../Image2/player/baseCharEffect1.bmp", L"Right_Dash")
+	ADD_BMP(L"../Image2/player/baseCharEffect_Left1.bmp", L"Left_Dash")
 
 	m_pImgKey = L"Player_IDLE_Right";  // 기본 상태는 오른쪽
 	m_eCurState = IDLE;
@@ -56,10 +61,6 @@ void CPlayer::Initialize()
 	m_tFrame.dwSpeed = 80; 
 	m_tFrame.dwTime = GetTickCount64();
 }
-
-
-
-
 int CPlayer::Update()
 {
 	
@@ -84,7 +85,7 @@ int CPlayer::Update()
 	__super::Update_Rect();
 
 	return OBJ_NOEVENT;
-}
+ }
 
 
 void CPlayer::Late_Update()
@@ -101,35 +102,139 @@ void CPlayer::Render(HDC hDC)
 	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
 	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
-	HDC		hMemDC = CBmpMgr::Get_Instance()->Find_Image(m_pImgKey);
+	POINT ptMouse;
+	GetCursorPos(&ptMouse);
+	ScreenToClient(g_hWnd, &ptMouse);
+
+
+	if ((ptMouse.x - iScrollX > m_tInfo.fX)) // 마우스 좌표가 플레이어보다  오른쪽일때
+	for (const auto& trail : m_vTrails)
+	{
+		
+		Graphics graphics(hDC);
+
+		// 이미지 로드
+		Image image(L"../Image2/player/baseCharEffect1.bmp");
+
+		// 투명도 설정 (Alpha 값)
+		BYTE alpha = (BYTE)(trail.alpha * 100);
+
+		// ImageAttributes를 사용하여 특정 색상 (255, 0, 255)을 투명화
+		ImageAttributes imgAttributes;
+		Color transparentColor(255, 255, 0, 255); // RGB(255, 0, 255)를 투명하게
+		imgAttributes.SetColorKey(transparentColor, transparentColor);
+
+		// 투명도 적용을 위한 색상 매트릭스 설정
+		ColorMatrix colorMatrix = {
+			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+		imgAttributes.SetColorMatrix(&colorMatrix);
+
+		// 이미지 출력
+		graphics.DrawImage(&image,
+			Rect((int)trail.x + iScrollX-70, (int)trail.y-40 + iScrollY, 102, 100),
+			0, 0, 102, 100,
+			UnitPixel, &imgAttributes);
+	}
+
+	if ((ptMouse.x - iScrollX < m_tInfo.fX)) // 마우스 좌표가 플레이어보다  왼쪽일때
+		for (const auto& trail : m_vTrails)
+		{
+
+			Graphics graphics(hDC);
+
+			
+			Image image(L"../Image2/player/baseCharEffect_Left1.bmp");
+
+	
+			BYTE alpha = (BYTE)(trail.alpha * 100);
+
+		
+			ImageAttributes imgAttributes;
+			Color transparentColor(255, 255, 0, 255); 
+			imgAttributes.SetColorKey(transparentColor, transparentColor);
+
+			
+			ColorMatrix colorMatrix = {
+				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+				0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+			};
+			imgAttributes.SetColorMatrix(&colorMatrix);
+
+			// 이미지 출력
+			graphics.DrawImage(&image,
+				Rect((int)trail.x + iScrollX - 20, (int)trail.y - 40 + iScrollY, 102, 100),
+				0, 0, 102, 100,
+				UnitPixel, &imgAttributes);
+		}
+
+	HDC		hPlayerDC = FIND_BMP(m_pImgKey); 
 
 	GdiTransparentBlt(hDC,			
 		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
 		m_tRect.top + iScrollY,
 		(int)m_tInfo.fCX,			// 복사한 이미지 크기 어떻게할껀지
 		(int)m_tInfo.fCY,
-		hMemDC,						
+		hPlayerDC,
 		(int)m_tInfo.fCX * m_tFrame.iFrameStart,	// 		
 		(int)m_tInfo.fCY * m_tFrame.iMotion,
-		102.8,			// 원본 크기 적어주고
-		100.f,
+		102,			// 원본 크기 적어주고
+		100,
 		RGB(255, 0, 255));		
 
 	if (m_pImgKey == (L"Player_Right") || m_pImgKey == (L"Player_Left") && m_bJump == false)
 	{
 
-		HDC hEffectDC = CBmpMgr::Get_Instance()->Find_Image(L"Run_Effect");
+		HDC hEffectDC = FIND_BMP(L"Run_Effect");
 
 		GdiTransparentBlt(hDC,
 			(int)m_tInfo.fX + iScrollX - 50,
 			(int)m_tInfo.fY + iScrollY,
-			80, 80,  // 효과 크기
+			64, 80,  // 효과 크기
 			hEffectDC,
 			(int)m_tInfo.fCX * m_tFrame.iFrameStart,
 			(int)m_tInfo.fCY * m_tFrame.iMotion,
 			64, 64,
 			RGB(255, 0, 255));
 	}
+
+	//if (m_bDashing)
+	//{
+	//	HDC hEffectDC = FIND_BMP(L"Right_Dash");
+
+	//	GdiTransparentBlt(hDC,
+	//		(int)m_tInfo.fX + iScrollX ,
+	//		(int)m_tInfo.fY + iScrollY-40,
+	//		102, 100,  // 효과 크기
+	//		hEffectDC,
+	//		(int)m_tInfo.fCX * m_tFrame.iFrameStart,
+	//		(int)m_tInfo.fCY * m_tFrame.iMotion,
+	//		102, 100,
+	//		RGB(255, 0, 255));
+	//}
+	//else if (m_bDashing && (m_pImgKey == (L"Player_Left")))
+	//{
+	//	HDC hEffectDC = FIND_BMP(L"Left_Dash");
+
+	//	GdiTransparentBlt(hDC,
+	//		(int)m_tInfo.fX + iScrollX - 50,
+	//		(int)m_tInfo.fY + iScrollY,
+	//		60, 75,  // 효과 크기
+	//		hEffectDC,
+	//		(int)m_tInfo.fCX * m_tFrame.iFrameStart,
+	//		(int)m_tInfo.fCY * m_tFrame.iMotion,
+	//		60, 75,
+	//		RGB(255, 0, 255));
+
+
+	//}
 
 	TCHAR szBuffer[128];
 	_stprintf_s(szBuffer, _T("Jump: %d, Dash: %d"), m_bJump, m_bDoubleJump); // 점프 여부 확인 나중에 게이지로 바꿀꺼임
@@ -196,62 +301,89 @@ void CPlayer::Key_Input()
 	{
 		StartDash(ptMouse.x - iScrollX, ptMouse.y - iScrollY);
 		m_bJump = false;
+		m_eCurState = DASH;
 	}
 }
 
 
-void CPlayer::StartDash(float targetX, float targetY) // 마우스 위치로 대쉬 조질꺼임
+void CPlayer::StartDash(float targetX, float targetY)
 {
-	m_bDashing = true;      
-	m_fDash_Mouse_X = targetX;
-	m_fDash_Mouse_Y = targetY;
+	
+	m_bDashing = true;
+
+	
+	float maxDashDistance = 200.0f;  // 원작이랑 똑같이 블럭 4개정도만 대쉬하게 
+
+	// 현재 플레이어와의 x랑y 거리 계산
+	float deltaX = targetX - m_tInfo.fX; 
+	float deltaY = targetY - m_tInfo.fY; 
+
+	// 피타고라스로 거리 조지기
+	float distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+
+
+	if (distance > maxDashDistance)
+	{
+		
+		float ratio = maxDashDistance / distance; // 최대 거리 / 현재 거리 = 조정 비율! << GPT가 알려줌
+
+		deltaX *= ratio; // X축 거리 조정
+		deltaY *= ratio; // Y축 거리 조정
+	}
+
+	m_fDash_Mouse_X = m_tInfo.fX + deltaX; 
+	m_fDash_Mouse_Y = m_tInfo.fY + deltaY; 
 }
 
 void CPlayer::PerformDash()
 {
-	// 마우스와 플레이어의 거리 구하기!
-	float fDistanceX = m_fDash_Mouse_X - m_tInfo.fX;
+	// 플레어어랑 마우스위치차이
+	float fDistanceX = m_fDash_Mouse_X - m_tInfo.fX; 
 	float fDistanceY = m_fDash_Mouse_Y - m_tInfo.fY;
 
-	// 플레이어가 대쉬지정한곳에 거의다 왔을때 종료
+	// 만약에 거리차이가 대쉬속도바다 작으면 도착한걸로
 	if (fabs(fDistanceX) <= m_fDashSpeed && fabs(fDistanceY) <= m_fDashSpeed)
 	{
+		
 		m_tInfo.fX = m_fDash_Mouse_X;
 		m_tInfo.fY = m_fDash_Mouse_Y;
+
 		m_bDashing = false;
-		return;
+
+		m_vTrails.clear();
+		return; 
 	}
 
-	// 최대 대쉬 거리 제한
-	const float fMaxDashDistance = 200.0f; // 최대 대쉬 가능 거리
 
-	float fTargetDistance = sqrt(fDistanceX * fDistanceX + fDistanceY * fDistanceY); // 삐따고라스로 거리 구하기
+	// 대쉬가 계속되는 경우, 목표 위치로 이동할 비율 계산
+	float fTotalDistance = abs(fDistanceX) + abs(fDistanceY); 
+	float ratioX = fDistanceX / fTotalDistance; 
+	float ratioY = fDistanceY / fTotalDistance; 
 
-	if (fTargetDistance > fMaxDashDistance) // 
-	{
-		// 현재 거리가 최대 대쉬 거리보다 클 경우 !!!!!
-		float ratio = fMaxDashDistance / fTargetDistance; // 타겟과 거리분의 최대 거리는
-		fDistanceX *= ratio;
-		fDistanceY *= ratio;
-		m_fDash_Mouse_X = m_tInfo.fX + fDistanceX;
-		m_fDash_Mouse_Y = m_tInfo.fY + fDistanceY;
-	}
+	// 대쉬 속도에 비율을 곱해서 다음 프레임의 이동량 계산
+	m_tInfo.fX += ratioX * m_fDashSpeed; 
+	m_tInfo.fY += ratioY * m_fDashSpeed; 
 
-	//  이동 비율 계산
-	float fTotalDistance = abs(fDistanceX) + abs(fDistanceY); // 전체 거리 계산 (X + Y)
-	float ratioX = fDistanceX / fTotalDistance; // X축 이동 비율
-	float ratioY = fDistanceY / fTotalDistance; // Y축 이동 비율
+	Trail newTrail;
+	newTrail.x = m_tInfo.fX; 
+	newTrail.y = m_tInfo.fY;
+	newTrail.alpha = 1.0f; // (처음에는 완전히 보이게 설정) 투명도 설정하는곳임
+	newTrail.startTime = GetTickCount64(); 
+	m_vTrails.push_back(newTrail); // 잔상을 trail 목록에 추가
 
-	// 대쉬 속도준값만큼이동시키기  // 여기가 사실상 대각선 이긴함 
-	m_tInfo.fX += ratioX * m_fDashSpeed;
-	m_tInfo.fY += ratioY * m_fDashSpeed;
-
-	// 대쉬 중에는 중력안받게끔!! ( 이거 없으면 곡선처럼 휘어짐..)
-	m_fGravity = 0.f;
-	m_fTime = 0.f;
+	DWORD currentTime = GetTickCount64(); // 현재 시간 가져오기
+	m_vTrails.erase(remove_if(m_vTrails.begin(), m_vTrails.end(),
+		[currentTime](const Trail& trail) // gpt가 만들어준 람다
+		{
+			return (currentTime - trail.startTime > 100);
+		}), m_vTrails.end());
 }
 
-
+//[캡처 리스트](매개변수) -> 반환 타입 { 함수 본문 };
+//currentTime 변수를 람다 내부에서 사용하겠다는 의미
+// (const Trail& trail) 는 람다 함수에 전달되는 매개변수이고
+// currentTime - trail.startTime > 100  이게 조건이고
+// 생성된 지 100ms가 지나면 삭제할꺼임 remove_if로
 
 
 void CPlayer::Jumping()
@@ -369,7 +501,7 @@ void CPlayer::Offset()
 
 CObj* CPlayer::Create_Shield()
 {
-	CObj* pShield = CAbstractFactory<CShield>::Create();
+	CObj* pShield = CAbstractFactory<CDifferent>::Create();
 
 	pShield->Set_Target(this);
 
@@ -386,7 +518,7 @@ void CPlayer::Change_Motion()
 			m_tFrame.iFrameStart = 0; // 첫번째
 			m_tFrame.iFrameEnd = 4;
 			m_tFrame.iMotion = 0;
-			m_tFrame.dwSpeed = 500;
+			m_tFrame.dwSpeed = 100;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
@@ -398,22 +530,13 @@ void CPlayer::Change_Motion()
 			m_tFrame.dwTime = GetTickCount64();
 			break;
 
-		case CPlayer::EffECT:
+		case CPlayer::DASH:
 			m_tFrame.iFrameStart = 0;
 			m_tFrame.iFrameEnd = 4;
 			m_tFrame.iMotion = 0;
-			m_tFrame.dwSpeed = 200;
+			m_tFrame.dwSpeed = 300;
 			m_tFrame.dwTime = GetTickCount64();
 			break;
-
-		case CPlayer::DOUBLEJUMP:
-			m_tFrame.iFrameStart = 0;
-			m_tFrame.iFrameEnd = 3;
-			m_tFrame.iMotion = 2; // 예: 이중 점프 모션
-			m_tFrame.dwSpeed = 100;
-			m_tFrame.dwTime = GetTickCount64();
-			break;
-
 
 		case CPlayer::ATTACK:
 			m_tFrame.iFrameStart = 0;

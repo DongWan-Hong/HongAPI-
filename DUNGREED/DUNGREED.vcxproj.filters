@@ -8,31 +8,28 @@
       <Filter>01. OBJECT</Filter>
     </ClCompile>
     <ClCompile Include="CMonster.cpp">
-      <Filter>01. OBJECT\MoveObject\02_Monster</Filter>
+      <Filter>01. OBJECT\01. MoveObject\02_Monster</Filter>
     </ClCompile>
     <ClCompile Include="CMouse.cpp">
-      <Filter>01. OBJECT\MoveObject\03_Mouse</Filter>
+      <Filter>01. OBJECT\01. MoveObject\03_Mouse</Filter>
     </ClCompile>
-    <ClCompile Include="CShield.cpp">
-      <Filter>01. OBJECT\MoveObject\04_Shield</Filter>
+    <ClCompile Include="Different.cpp">
+      <Filter>01. OBJECT\01. MoveObject\00_Plyaer\Different</Filter>
     </ClCompile>
     <ClCompile Include="CMyButton.cpp">
-      <Filter>01. OBJECT\StaticObject\05_Button</Filter>
+      <Filter>01. OBJECT\02 .StaticObject\01_Button</Filter>
     </ClCompile>
     <ClCompile Include="CPlayer.cpp">
-      <Filter>01. OBJECT\MoveObject\00_Plyaer</Filter>
+      <Filter>01. OBJECT\01. MoveObject\00_Plyaer</Filter>
     </ClCompile>
     <ClCompile Include="CBullet.cpp">
-      <Filter>01. OBJECT\MoveObject\01_Bullet</Filter>
+      <Filter>01. OBJECT\01. MoveObject\01_Bullet</Filter>
     </ClCompile>
     <ClCompile Include="CBmpMgr.cpp">
       <Filter>03. DESIGN\BmpMgr</Filter>
     </ClCompile>
     <ClCompile Include="CCollisionMgr.cpp">
       <Filter>03. DESIGN\CollisionMgr</Filter>
-    </ClCompile>
-    <ClCompile Include="CGuideBullet.cpp">
-      <Filter>01. OBJECT\MoveObject\01_Bullet\GuideBullet</Filter>
     </ClCompile>
     <ClCompile Include="CKeyMgr.cpp">
       <Filter>03. DESIGN\KeyMgr</Filter>
@@ -61,9 +58,6 @@
     <ClCompile Include="CSceneMgr.cpp">
       <Filter>03. DESIGN\SceneMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CScrewBullet.cpp">
-      <Filter>01. OBJECT\MoveObject\01_Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="CScrollMgr.cpp">
       <Filter>03. DESIGN\ScrollMgr</Filter>
     </ClCompile>
@@ -83,13 +77,13 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Block.cpp">
-      <Filter>01. OBJECT\StaticObject\06. Block</Filter>
+      <Filter>01. OBJECT\02 .StaticObject\02. Block</Filter>
     </ClCompile>
     <ClCompile Include="StaticObj.cpp">
-      <Filter>01. OBJECT\StaticObject</Filter>
+      <Filter>01. OBJECT\02 .StaticObject</Filter>
     </ClCompile>
     <ClCompile Include="MoveObject.cpp">
-      <Filter>01. OBJECT\MoveObject</Filter>
+      <Filter>01. OBJECT\01. MoveObject</Filter>
     </ClCompile>
     <ClCompile Include="BoxCollider.cpp">
       <Filter>03. DESIGN\CollisionMgr\Box</Filter>
@@ -106,6 +100,18 @@
     <ClCompile Include="Stage_00.cpp">
       <Filter>02. SCENE\03_Test_Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>06. Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>06. Item\01. Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Inven.cpp">
+      <Filter>05. Inven</Filter>
+    </ClCompile>
+    <ClCompile Include="Store.cpp">
+      <Filter>07. Store</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CMainGame.h">
@@ -115,19 +121,19 @@
       <Filter>01. OBJECT</Filter>
     </ClInclude>
     <ClInclude Include="CMonster.h">
-      <Filter>01. OBJECT\MoveObject\02_Monster</Filter>
+      <Filter>01. OBJECT\01. MoveObject\02_Monster</Filter>
     </ClInclude>
     <ClInclude Include="CMouse.h">
-      <Filter>01. OBJECT\MoveObject\03_Mouse</Filter>
+      <Filter>01. OBJECT\01. MoveObject\03_Mouse</Filter>
     </ClInclude>
     <ClInclude Include="CMyButton.h">
-      <Filter>01. OBJECT\StaticObject\05_Button</Filter>
+      <Filter>01. OBJECT\02 .StaticObject\01_Button</Filter>
     </ClInclude>
     <ClInclude Include="CPlayer.h">
-      <Filter>01. OBJECT\MoveObject\00_Plyaer</Filter>
+      <Filter>01. OBJECT\01. MoveObject\00_Plyaer</Filter>
     </ClInclude>
     <ClInclude Include="CBullet.h">
-      <Filter>01. OBJECT\MoveObject\01_Bullet</Filter>
+      <Filter>01. OBJECT\01. MoveObject\01_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CAbstractFactory.h">
       <Filter>03. DESIGN\AbstractFactory</Filter>
@@ -137,9 +143,6 @@
     </ClInclude>
     <ClInclude Include="CCollisionMgr.h">
       <Filter>03. DESIGN\CollisionMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CGuideBullet.h">
-      <Filter>01. OBJECT\MoveObject\01_Bullet\GuideBullet</Filter>
     </ClInclude>
     <ClInclude Include="CKeyMgr.h">
       <Filter>03. DESIGN\KeyMgr</Filter>
@@ -167,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="CSceneMgr.h">
       <Filter>03. DESIGN\SceneMgr</Filter>
-    </ClInclude>
-    <ClInclude Include="CScrewBullet.h">
-      <Filter>01. OBJECT\MoveObject\01_Bullet</Filter>
     </ClInclude>
     <ClInclude Include="CScrollMgr.h">
       <Filter>03. DESIGN\ScrollMgr</Filter>
@@ -202,16 +202,16 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Block.h">
-      <Filter>01. OBJECT\StaticObject\06. Block</Filter>
+      <Filter>01. OBJECT\02 .StaticObject\02. Block</Filter>
     </ClInclude>
     <ClInclude Include="StaticObj.h">
-      <Filter>01. OBJECT\StaticObject</Filter>
+      <Filter>01. OBJECT\02 .StaticObject</Filter>
     </ClInclude>
     <ClInclude Include="MoveObject.h">
-      <Filter>01. OBJECT\MoveObject</Filter>
+      <Filter>01. OBJECT\01. MoveObject</Filter>
     </ClInclude>
-    <ClInclude Include="CShield.h">
-      <Filter>01. OBJECT\MoveObject\04_Shield</Filter>
+    <ClInclude Include="Different.h">
+      <Filter>01. OBJECT\01. MoveObject\00_Plyaer\Different</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
       <Filter>03. DESIGN\CollisionMgr\Box</Filter>
@@ -227,6 +227,18 @@
     </ClInclude>
     <ClInclude Include="Stage_00.h">
       <Filter>02. SCENE\03_Test_Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>06. Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>06. Item\01. Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Inven.h">
+      <Filter>05. Inven</Filter>
+    </ClInclude>
+    <ClInclude Include="Store.h">
+      <Filter>07. Store</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -252,36 +264,6 @@
     </Filter>
     <Filter Include="01. OBJECT">
       <UniqueIdentifier>{8139c26f-c779-41db-b97e-68f2057256d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject">
-      <UniqueIdentifier>{95bf2757-27ae-456f-b4a8-0c599791a44f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject\00_Plyaer">
-      <UniqueIdentifier>{6f896164-1a4c-4646-8235-8d78b88cae1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject\01_Bullet">
-      <UniqueIdentifier>{3dabe081-d2b1-4f1d-a246-621191e6695e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject\01_Bullet\GuideBullet">
-      <UniqueIdentifier>{86506333-7994-4117-888b-0a0b21cbee44}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject\02_Monster">
-      <UniqueIdentifier>{541dc20f-fc67-4c9d-b234-0ecf111c3ecd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject\03_Mouse">
-      <UniqueIdentifier>{79f16d85-b5c7-481d-8f2d-b424c0681bb9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\MoveObject\04_Shield">
-      <UniqueIdentifier>{a38ddbfd-6b4f-4a70-b8e2-8622fc472963}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\StaticObject">
-      <UniqueIdentifier>{03977528-6d5d-4183-bdd2-3ffa46cdad21}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\StaticObject\06. Block">
-      <UniqueIdentifier>{a41c8e12-793d-433c-83e4-511426a52d81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\StaticObject\05_Button">
-      <UniqueIdentifier>{f33eb908-6abb-4038-8e33-82ecd3bbaa06}</UniqueIdentifier>
     </Filter>
     <Filter Include="02. SCENE">
       <UniqueIdentifier>{77a5f581-3c16-473d-9e93-0e7873f0e653}</UniqueIdentifier>
@@ -348,6 +330,48 @@
     </Filter>
     <Filter Include="02. SCENE\03_Test_Stage">
       <UniqueIdentifier>{1e390aec-c8a7-45b3-93cf-7c927d5454a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject">
+      <UniqueIdentifier>{95bf2757-27ae-456f-b4a8-0c599791a44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject\00_Plyaer">
+      <UniqueIdentifier>{6f896164-1a4c-4646-8235-8d78b88cae1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject\01_Bullet">
+      <UniqueIdentifier>{3dabe081-d2b1-4f1d-a246-621191e6695e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject\02_Monster">
+      <UniqueIdentifier>{541dc20f-fc67-4c9d-b234-0ecf111c3ecd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject\03_Mouse">
+      <UniqueIdentifier>{79f16d85-b5c7-481d-8f2d-b424c0681bb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\02 .StaticObject">
+      <UniqueIdentifier>{03977528-6d5d-4183-bdd2-3ffa46cdad21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\02 .StaticObject\01_Button">
+      <UniqueIdentifier>{f33eb908-6abb-4038-8e33-82ecd3bbaa06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\02 .StaticObject\02. Block">
+      <UniqueIdentifier>{a41c8e12-793d-433c-83e4-511426a52d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. Inven">
+      <UniqueIdentifier>{7b387785-81b9-417c-b5a3-dd85c26dcb6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="07. Store">
+      <UniqueIdentifier>{5cce3909-dc93-482d-bfe6-19c1a7a45572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Item">
+      <UniqueIdentifier>{532f209a-4e02-4cbd-881e-bc21c5dbc723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject\00_Plyaer\Different">
+      <UniqueIdentifier>{a38ddbfd-6b4f-4a70-b8e2-8622fc472963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Item\02. Shiled">
+      <UniqueIdentifier>{aab32539-b56b-4b12-89d1-e013ff9bea83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Item\01. Weapon">
+      <UniqueIdentifier>{a469bf85-88a2-42ae-ada0-ed9f1a01856a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

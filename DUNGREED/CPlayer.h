@@ -1,13 +1,12 @@
 #pragma once
 #include "CObj.h"
-#include "CShield.h"
-#include "CScrewBullet.h"
-#include "CGuideBullet.h"
+#include "Different.h"
+
 
 class CPlayer :    public CObj
 {
 public:
-    enum STATE { IDLE, DOUBLEJUMP, WALK,EffECT, ATTACK, HIT, DEAD, END };
+    enum STATE { IDLE, DOUBLEJUMP, WALK,EffECT, DASH,ATTACK, HIT, DEAD, END };
 
 public:
     CPlayer();
@@ -69,5 +68,8 @@ private:
 
     float m_fFixScrollSpeedX; // 대쉬속도를 감당해줄 변수
     float m_fFixScrollSpeedY;
+
+    vector<Trail> m_vTrails;
+
 };
 

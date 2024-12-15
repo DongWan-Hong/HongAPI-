@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "CSceneMgr.h"
 #include "Stage_00.h"
+#include "BlockMgr.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 
@@ -38,6 +39,7 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 
 		case SC_Test:
 			m_pScene = new CStage_00;
+			CBlockMgr::Get_Instance()->Load_Block(L"../Data/00_Stage.dat"); 
 			break;
 
 		case SC_STAGE:
