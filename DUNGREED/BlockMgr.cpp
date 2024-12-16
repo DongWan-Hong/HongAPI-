@@ -6,7 +6,7 @@
 #include "CObjMgr.h"
 #include "CBmpMgr.h"
 #include "Block_01.h"
-#include "Block.h"
+#include "BaseBlock.h"
 //#include "Monster.h"
 
 
@@ -496,7 +496,7 @@ void CBlockMgr::Save_Block()
 	{
 		WriteFile(hFile,
 			pObj,
-			sizeof(CBlock),
+			sizeof(CBaseBlock),
 			&dwByte, nullptr);
 	}
 
@@ -525,7 +525,7 @@ void CBlockMgr::Load_Block()
 	}
 
 	DWORD	dwByte(0);
-	CBlock  Block;
+	CBaseBlock  Block;
 	//ReadFile해서 어떤 오브젝트인지 판단한다음(CObj에 타입 멤버변수를 둬서 판단해야 겠다.)
 	//해당 리스트에 넣어줘야한다.
 	while (true)
@@ -533,7 +533,7 @@ void CBlockMgr::Load_Block()
 		//블럭 하나를 가져온다.
 		bool bResult = ReadFile(hFile,
 			&Block,
-			sizeof(CBlock),
+			sizeof(CBaseBlock),
 			&dwByte, nullptr);
 		//읽어온게 없으면 끝
 		if (0 == dwByte)
@@ -600,7 +600,7 @@ void CBlockMgr::Load_Block(LPCWSTR _FilePath)
 	}
 
 	DWORD	dwByte(0);
-	CBlock  Block;
+	CBaseBlock  Block;
 	//ReadFile해서 어떤 오브젝트인지 판단한다음(CObj에 타입 멤버변수를 둬서 판단해야 겠다.)
 	//해당 리스트에 넣어줘야한다.
 	while (true)
@@ -608,7 +608,7 @@ void CBlockMgr::Load_Block(LPCWSTR _FilePath)
 		//블럭 하나를 가져온다.
 		bool bResult = ReadFile(hFile,
 			&Block,
-			sizeof(CBlock),
+			sizeof(CBaseBlock),
 			&dwByte, nullptr);
 		//읽어온게 없으면 끝
 		if (0 == dwByte)

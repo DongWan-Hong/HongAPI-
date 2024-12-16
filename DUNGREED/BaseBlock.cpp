@@ -1,27 +1,27 @@
 #include "pch.h"
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
-#include "Block.h"
+#include "BaseBlock.h"
 
 
-CBlock::CBlock()
+CBaseBlock::CBaseBlock()
     
 {
     ZeroMemory(&m_eBlockType, sizeof(m_eBlockType));
 }
 
-CBlock::CBlock(float _fX, float _fY, float _fCX, float _fCY)
+CBaseBlock::CBaseBlock(float _fX, float _fY, float _fCX, float _fCY)
 {
     ZeroMemory(&m_eBlockType, sizeof(m_eBlockType));
     Set_Pos(_fX, _fX);
     Set_Size(_fCX, _fCY);
 }
 
-CBlock::~CBlock()
+CBaseBlock::~CBaseBlock()
 {
 }
 
-void CBlock::Initialize()
+void CBaseBlock::Initialize()
 {
     m_tInfo.fCX = 50.f;
     m_tInfo.fCY = 50.f;
@@ -31,7 +31,7 @@ void CBlock::Initialize()
     
 }
 
-int CBlock::Update()
+int CBaseBlock::Update()
 {
     if (m_bDead)
         return OBJ_DEAD;
@@ -41,11 +41,11 @@ int CBlock::Update()
     return OBJ_NOEVENT;
 }
 
-void CBlock::Late_Update()
+void CBaseBlock::Late_Update()
 {
 }
 
-void CBlock::Render(HDC hDC)
+void CBaseBlock::Render(HDC hDC)
 {
     int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
     int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
@@ -59,6 +59,6 @@ void CBlock::Render(HDC hDC)
 }
 
 
-void CBlock::Release()
+void CBaseBlock::Release()
 {
 }

@@ -1,34 +1,32 @@
 #pragma once
-#include "CPlayer.h"
+
 #include "UIBase.h"
+#include "Item.h"
 
-class CInven : public CUI
-{
+class CInven {
 public:
-	CInven();
-	~CInven();
+    CInven();
+    ~CInven();
 
-public:
-	void		Set_Player(CObj* pPlayer) { m_pInven_Player = pPlayer; }
-
-public:
-	void Initialize();
-	int Update();
-	void Render();
-	void Release();
+    SINGLE(CInven); // 새 매크로를 적용
 
 public:
-	bool	Buy_Item(CObj* _pItem);
-	bool	Sell_Item(int iInput, int* pMoney);
+    void AddItem(CObj* pItem);  // 아이템 추가
+    void RemoveItem(CObj* pItem); // 아이템 제거
+public:
+    void Set_Player(CObj* pPlayer) { m_pInven_Player = pPlayer; }
+    void Initialize();
+    int Update();
+    void Render(HDC hDC);
+    void Release();
 
-	void	Equip_Item();
-	void	Unequip_Item();
+    void Equip_Item();
+    void Unequip_Item();
 
+    void ToggleEquip(CItem* pItem);
 
 private:
-	CObj* m_pInven_Player;
-	vector<CObj*>		m_vecInven;
-	int	m_iSize; // 던그리드는 최대 15개
-
+    CObj* m_pInven_Player;
+    vector<CObj*> m_vecInven;
+    int m_iSize;
 };
-

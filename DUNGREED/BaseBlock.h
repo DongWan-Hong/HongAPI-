@@ -1,12 +1,12 @@
 #pragma once
 #include "CObj.h"
-class CBlock :
+class CBaseBlock :
     public CObj
 {
 public:
-    CBlock();
-    CBlock(float _fX, float _fY, float _fCX , float _fCY);
-    virtual ~CBlock();
+    CBaseBlock();
+    CBaseBlock(float _fX, float _fY, float _fCX , float _fCY);
+    virtual ~CBaseBlock();
 public:
     INFO* Get_Info() { return &m_tInfo; }
 

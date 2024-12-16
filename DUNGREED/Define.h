@@ -17,16 +17,26 @@
 #define TILEX				5
 #define TILEY				5
 
+#define	ItemX				50
+#define	ItemY				50
+
+
 #define ADD_BMP(file, name)   CBmpMgr::Get_Instance()->Insert_Bmp(file, name); 
 #define FIND_BMP(key) CBmpMgr::Get_Instance()->Find_Image(key)
 
-#define SINGLE(type) static type* Get_Instance()\
-                       {\
-                             static type mgr;\
-                             return &mgr;\
-                       }
+#define SINGLE(Type)         \
+public:                      \
+    static Type* GetInstance() { \
+        static Type instance; \
+        return &instance;    \
+    }                        \
+private:                     \
+    Type(const Type&) = delete; \
+    Type& operator=(const Type&) = delete;
+
 
 extern HWND		g_hWnd;
+extern    HDC m_hDC;
 extern bool m_bInven;
 enum DRAWPOINT { HEAD, TAIL, DRAWPOINT_END };
 enum DRAWDIR { NO_DIR, HORIZONTAL, VERTICAL, DRAWDIR_END };
@@ -50,6 +60,7 @@ struct Trail
 	DWORD startTime;  // 잔상 생성 시간
 };
 
+enum UI_STATE{UI_INVEN,UI_END };
 
 enum OBJID 
 { 
@@ -60,8 +71,6 @@ enum OBJID
 	OBJ_SHIELD, 
 	OBJ_BUTTON,
 	OBJ_MOUSE,
-
-
 	OBJ_UI = 31,
 	OBJ_END = 32 
 };

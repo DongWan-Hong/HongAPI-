@@ -7,17 +7,22 @@
 #include "CKeyMgr.h"
 #include "CScrollMgr.h"
 #include "CBmpMgr.h"
+#include "Inven.h"
+#include "CMainGame.h"
+#include "Weapon_FireSword.h"
+#include "Weapon_Sword.h"
+
 
 bool CPlayer::m_bInven = false;
 
 CPlayer::CPlayer()
-	: m_bJump(false), m_fJumpPower(0.f), m_fTime(0.f),m_bDefatule_IDle(true)
+	: m_bJump(false), m_fJumpPower(0.f), m_fTime(0.f), m_bDefatule_IDle(true), m_pEquippedItem(nullptr)
 {
 	m_fGravity = 0.f;
 	ZeroMemory(&m_tPosin, sizeof(POINT));
-	ZeroMemory(&m_eCurState,sizeof(STATE));
-	ZeroMemory(&m_ePreState,sizeof(STATE));
-	m_bDashing = false;      
+	ZeroMemory(&m_eCurState, sizeof(STATE));
+	ZeroMemory(&m_ePreState, sizeof(STATE));
+	m_bDashing = false;
 	m_bInven = false;
 	m_fDash_Mouse_X = 0.f;
 	m_fDash_Mouse_Y = 0.f;
@@ -38,34 +43,37 @@ void CPlayer::Initialize()
 	m_fDistance = 100.f; // 
 	m_eOBJID = OBJ_PLAYER; // 플레이어 명칭 온콜리전 때매
 	m_fJumpPower = 20.f; // 점프파워
+	CInven::GetInstance()->Initialize();
 
+	ADD_BMP(L"../Image2/Player/baseCharIdle3.bmp", L"Player_IDLE_Right");
 
-	ADD_BMP(L"../Image2/Player/baseCharIdle3.bmp", L"Player_IDLE_Right"); 
+	ADD_BMP(L"../Image2/Player/baseCharIdleLeft3.bmp", L"Player_IDLE_Left");
+	ADD_BMP(L"../Image2/Player/baseCharRun2.bmp", L"Player_Right");
+	ADD_BMP(L"../Image2/Player/Dir/Left2.bmp", L"Player_Left");
 
-	ADD_BMP(L"../Image2/Player/baseCharIdleLeft3.bmp", L"Player_IDLE_Left"); 
-	ADD_BMP(L"../Image2/Player/baseCharRun2.bmp", L"Player_Right"); 
-	ADD_BMP(L"../Image2/Player/Dir/Left2.bmp", L"Player_Left"); 
-
-	ADD_BMP(L"../Image2/Player/RunEffect1.bmp", L"Run_Effect"); 
+	ADD_BMP(L"../Image2/Player/RunEffect1.bmp", L"Run_Effect");
 
 	//ADD_BMP(L"../Image3/Weapon/BasicShortSword.bmp", L"Player_Sword")
 
 	ADD_BMP(L"../Image2/player/baseCharEffect1.bmp", L"Right_Dash")
-	ADD_BMP(L"../Image2/player/baseCharEffect_Left1.bmp", L"Left_Dash")
+		ADD_BMP(L"../Image2/player/baseCharEffect_Left1.bmp", L"Left_Dash")
 
-	m_pImgKey = L"Player_IDLE_Right";  // 기본 상태는 오른쪽
+		m_pImgKey = L"Player_IDLE_Right";  // 기본 상태는 오른쪽
 	m_eCurState = IDLE;
 	m_ePreState = IDLE;
 
 	m_tFrame.iFrameStart = 0;
 	m_tFrame.iFrameEnd = 4;
 	m_tFrame.iMotion = 0;
-	m_tFrame.dwSpeed = 80; 
+	m_tFrame.dwSpeed = 80;
 	m_tFrame.dwTime = GetTickCount64();
 }
 int CPlayer::Update()
 {
-	
+	if (m_bInven)
+	{
+		CInven::GetInstance()->Update(); 
+	}
 
 	if (m_bDashing)
 	{
@@ -87,7 +95,7 @@ int CPlayer::Update()
 	__super::Update_Rect();
 
 	return OBJ_NOEVENT;
- }
+}
 
 
 void CPlayer::Late_Update()
@@ -108,44 +116,44 @@ void CPlayer::Render(HDC hDC)
 	GetCursorPos(&ptMouse);
 	ScreenToClient(g_hWnd, &ptMouse);
 
-	
+
 	const wchar_t* imagePath = (ptMouse.x - iScrollX > m_tInfo.fX) ?
 		L"../Image2/player/baseCharEffect1.bmp" :  // 오른쪽 이미지
 		L"../Image2/player/baseCharEffect_Left1.bmp"; // 왼쪽 이미지
 
 	int offsetX = (ptMouse.x - iScrollX > m_tInfo.fX) ? -70 : -20; // 
 
-	
-		for (const auto& trail : m_vTrails)
-		{
-			Graphics graphics(hDC);
+
+	for (const auto& trail : m_vTrails)
+	{
+		Graphics graphics(hDC);
 
 
-			Image image(imagePath);
+		Image image(imagePath);
 
 
-			BYTE alpha = (BYTE)(trail.alpha * 70);
+		BYTE alpha = (BYTE)(trail.alpha * 70);
 
-			// ImageAttributes를 사용하여 특정 색상 (255, 0, 255)을 투명화
-			ImageAttributes imgAttributes;
-			Color transparentColor(255, 255, 0, 255);
-			imgAttributes.SetColorKey(transparentColor, transparentColor);
+		// ImageAttributes를 사용하여 특정 색상 (255, 0, 255)을 투명화
+		ImageAttributes imgAttributes;
+		Color transparentColor(255, 255, 0, 255);
+		imgAttributes.SetColorKey(transparentColor, transparentColor);
 
-			// 투명도 적용을 위한 색상 매트릭스 설정
-			ColorMatrix colorMatrix = {
-				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
-				0.0f, 0.0f, 0.0f, 0.0f, 1.0f
-			};
-			imgAttributes.SetColorMatrix(&colorMatrix);
+		// 투명도 적용을 위한 색상 매트릭스 설정
+		ColorMatrix colorMatrix = {
+			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
+			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+		};
+		imgAttributes.SetColorMatrix(&colorMatrix);
 
-			// 이미지 출력
-			graphics.DrawImage(&image,
-				Rect((int)trail.x + iScrollX + offsetX, (int)trail.y - 40 + iScrollY, 102, 100),
-				0, 0, 102, 100, UnitPixel, &imgAttributes);
-		}
+		// 이미지 출력
+		graphics.DrawImage(&image,
+			Rect((int)trail.x + iScrollX + offsetX, (int)trail.y - 40 + iScrollY, 102, 100),
+			0, 0, 102, 100, UnitPixel, &imgAttributes);
+	}
 
 
 	HDC hPlayerDC = FIND_BMP(m_pImgKey);
@@ -174,26 +182,22 @@ void CPlayer::Render(HDC hDC)
 			RGB(255, 0, 255));
 	}
 
-	if (m_bInven == true)
+
+	if (m_bInven)
 	{
-		Graphics graphics(hDC);
+		CInven::GetInstance()->Render(hDC);
 
-		Image Inven(L"../Image3/Inventory/InventoryBase2.png");
+		// 포인터 유효성 체크
+		if (m_pEquippedItem != nullptr)
+		{
+			int iPlayerX = (int)m_tInfo.fX;
+			int iPlayerY = (int)m_tInfo.fY;
 
-		ImageAttributes imgAttributes;
-		Color transparentColor(255, 255, 0, 255);
-		imgAttributes.SetColorKey(transparentColor, transparentColor);
-
-		// 이미지 출력
-		graphics.DrawImage(
-			&Inven,
-			Rect(WINCX - 405,  // 화면 오른쪽에 고정 (10px 여백)
-				WINCY-700, // 세로 중앙 정렬
-				492, 752),         // 이미지 크기
-			0, 0, 492, 752,
-			UnitPixel, &imgAttributes);
+			// 아이템 위치 설정
+			m_pEquippedItem->Set_Pos((float)(iPlayerX + 10), (float)(iPlayerY - 20));
+			m_pEquippedItem->Render(hDC);
+		}
 	}
-
 
 
 
@@ -274,25 +278,47 @@ void CPlayer::Key_Input()
 			m_eCurState = DASH;
 		}
 	}
-	if (CKeyMgr::Get_Instance()->Key_Down('I'))
+	if (CKeyMgr::Get_Instance()->Key_Down('I')) // 'I' 키 입력으로 인벤토리 열기/닫기
 	{
-		m_bInven = !m_bInven;
+		OpenInventory();
 	}
-	
+
+	if (m_bInven)
+	{
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_RETURN)) // Enter로 아이템 장착
+		{
+			EquipItemFromInventory();
+		}
+		if (CKeyMgr::Get_Instance()->Key_Down(VK_BACK)) // Backspace로 아이템 해제
+		{
+			UnequipItemToInventory();
+		}
+	}
+	if (CKeyMgr::Get_Instance()->Key_Down('K')) // K 키로 검 추가
+	{
+		CItem* pSword = new CWeapon_Sword();
+		CInven::GetInstance()->AddItem(pSword);
+	}
+
+	if (CKeyMgr::Get_Instance()->Key_Down('L')) // L 키로 활 추가
+	{
+		CItem* pBow = new CWeapon_FireSword();
+		CInven::GetInstance()->AddItem(pBow);
+	}
 }
 
 
 void CPlayer::StartDash(float targetX, float targetY)
 {
-	
+
 	m_bDashing = true;
 
-	
+
 	float maxDashDistance = 200.0f;  // 원작이랑 똑같이 블럭 4개정도만 대쉬하게 
 
 	// 현재 플레이어와의 x랑y 거리 계산
-	float deltaX = targetX - m_tInfo.fX; 
-	float deltaY = targetY - m_tInfo.fY; 
+	float deltaX = targetX - m_tInfo.fX;
+	float deltaY = targetY - m_tInfo.fY;
 
 	// 피타고라스로 거리 조지기
 	float distance = sqrt(deltaX * deltaX + deltaY * deltaY);
@@ -300,51 +326,51 @@ void CPlayer::StartDash(float targetX, float targetY)
 
 	if (distance > maxDashDistance)
 	{
-		
+
 		float ratio = maxDashDistance / distance; // 최대 거리 / 현재 거리 = 조정 비율! << GPT가 알려줌
 
 		deltaX *= ratio; // X축 거리 조정
 		deltaY *= ratio; // Y축 거리 조정
 	}
 
-	m_fDash_Mouse_X = m_tInfo.fX + deltaX; 
-	m_fDash_Mouse_Y = m_tInfo.fY + deltaY; 
+	m_fDash_Mouse_X = m_tInfo.fX + deltaX;
+	m_fDash_Mouse_Y = m_tInfo.fY + deltaY;
 }
 
 void CPlayer::PerformDash()
 {
 	// 플레어어랑 마우스위치차이
-	float fDistanceX = m_fDash_Mouse_X - m_tInfo.fX; 
+	float fDistanceX = m_fDash_Mouse_X - m_tInfo.fX;
 	float fDistanceY = m_fDash_Mouse_Y - m_tInfo.fY;
 
 	// 만약에 거리차이가 대쉬속도바다 작으면 도착한걸로
 	if (fabs(fDistanceX) <= m_fDashSpeed && fabs(fDistanceY) <= m_fDashSpeed)
 	{
-		
+
 		m_tInfo.fX = m_fDash_Mouse_X;
 		m_tInfo.fY = m_fDash_Mouse_Y;
 
 		m_bDashing = false;
 
 		m_vTrails.clear();
-		return; 
+		return;
 	}
 
 
 	// 대쉬가 계속되는 경우, 목표 위치로 이동할 비율 계산
-	float fTotalDistance = abs(fDistanceX) + abs(fDistanceY); 
-	float ratioX = fDistanceX / fTotalDistance; 
-	float ratioY = fDistanceY / fTotalDistance; 
+	float fTotalDistance = abs(fDistanceX) + abs(fDistanceY);
+	float ratioX = fDistanceX / fTotalDistance;
+	float ratioY = fDistanceY / fTotalDistance;
 
 	// 대쉬 속도에 비율을 곱해서 다음 프레임의 이동량 계산
-	m_tInfo.fX += ratioX * m_fDashSpeed; 
-	m_tInfo.fY += ratioY * m_fDashSpeed; 
+	m_tInfo.fX += ratioX * m_fDashSpeed;
+	m_tInfo.fY += ratioY * m_fDashSpeed;
 
 	Trail newTrail;
-	newTrail.x = m_tInfo.fX; 
+	newTrail.x = m_tInfo.fX;
 	newTrail.y = m_tInfo.fY;
 	newTrail.alpha = 1.0f; // (처음에는 완전히 보이게 설정) 투명도 설정하는곳임
-	newTrail.startTime = GetTickCount64(); 
+	newTrail.startTime = GetTickCount64();
 	m_vTrails.push_back(newTrail); // 잔상을 trail 목록에 추가
 
 	DWORD currentTime = GetTickCount64(); // 현재 시간 가져오기
@@ -367,7 +393,7 @@ void CPlayer::Jumping()
 	float fY(0.f);
 	if (m_bDashing) return; // 대쉬 중에는 Jumping 처리하지 ㄴㄴ
 	//bool bLineCol = CLineMgr::Get_Instance()->(m_tInfo.fX, &fY);
-	
+
 	// 중력 적용 (항상 실행)
 	m_tInfo.fY += 8.f;
 
@@ -393,9 +419,9 @@ void CPlayer::Jumping()
 		}
 
 		m_fTime += 0.25f;
-		
+
 	}
-	
+
 }
 
 
@@ -424,41 +450,41 @@ void CPlayer::Offset()
 	int iOffSetmaxX = WINCX / 2 + 100; // 화면 오른쪽 한계값 (범위를 넓힘)
 
 	int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
-	
+
 	if (iOffSetminX > m_tInfo.fX + iScrollX)
 	{
 		if (m_bDashing)
-			CScrollMgr::Get_Instance()->Set_ScrollX(m_fDashSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollX(m_fDashSpeed);
 		else
-			CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollX(m_fSpeed);
 	}
 
 	else if (iOffSetmaxX < m_tInfo.fX + iScrollX)
 	{
 		if (m_bDashing)
-			CScrollMgr::Get_Instance()->Set_ScrollX(-m_fDashSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollX(-m_fDashSpeed);
 		else
 			CScrollMgr::Get_Instance()->Set_ScrollX(-m_fSpeed);
 	}
 
-	int iOffSetminY = WINCY / 2 - 200; 
-	int iOffSetmaxY = WINCY / 2 + 200; 
+	int iOffSetminY = WINCY / 2 - 200;
+	int iOffSetmaxY = WINCY / 2 + 200;
 	int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
 
 	if (iOffSetminY > m_tInfo.fY + iScrollY)
 	{
 		if (m_bDashing)
-			CScrollMgr::Get_Instance()->Set_ScrollY(m_fDashSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollY(m_fDashSpeed);
 		else
-			CScrollMgr::Get_Instance()->Set_ScrollY(m_fSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollY(m_fSpeed);
 	}
 
 	else if (iOffSetmaxY < m_tInfo.fY + iScrollY)
 	{
 		if (m_bDashing)
-			CScrollMgr::Get_Instance()->Set_ScrollY(-m_fDashSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollY(-m_fDashSpeed);
 		else
-			CScrollMgr::Get_Instance()->Set_ScrollY(-m_fSpeed); 
+			CScrollMgr::Get_Instance()->Set_ScrollY(-m_fSpeed);
 	}
 }
 
@@ -531,6 +557,61 @@ void CPlayer::Change_Motion()
 		m_ePreState = m_eCurState;
 	}
 
+}
+
+void CPlayer::OpenInventory()
+{
+	m_bInven = !m_bInven; // 인벤토리 열기/닫기 상태 토글
+	if (m_bInven)
+	{
+
+	}
+	else
+	{
+
+	}
+}
+
+void CPlayer::AddItemToInventory(CObj* item)
+{
+	if (!item) return;
+
+	CInven::GetInstance()->AddItem(item); // 싱글톤 인벤토리에 아이템 추가
+
+}
+
+void CPlayer::EquipItemFromInventory()
+{
+	CInven::GetInstance()->Equip_Item(); // 인벤토리에서 아이템 장착
+
+}
+
+void CPlayer::UnequipItemToInventory()
+{
+	CInven::GetInstance()->Unequip_Item(); // 장착 해제 후 아이템을 인벤토리에 복귀
+
+}
+
+
+void CPlayer::Equip(CItem* pItem)
+{
+	if (!pItem) return;
+
+	m_pEquippedItem = pItem;
+	pItem->SetEquipped(true); 
+
+}
+
+CItem* CPlayer::UnEquip()
+{
+	if (m_pEquippedItem)
+	{
+		CItem* pTemp = m_pEquippedItem; // 장착된 아이템을 저장
+		m_pEquippedItem = nullptr;     // 장착 해제
+		pTemp->SetEquipped(false);     // 아이템 상태를 해제 상태로 설정
+		return pTemp;                  // 해제된 아이템 반환
+	}
+	return nullptr;
 }
 
 

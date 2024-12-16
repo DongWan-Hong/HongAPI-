@@ -15,23 +15,7 @@ CStore::~CStore()
 
 void CStore::Initialize()
 {
-	m_vecItem[IT_WEAPON].push_back(new CItem("초급검", 0, 10, 1000));
-	dynamic_cast<CItem*>(m_vecItem[IT_WEAPON].back())->Set_ItemType(IT_WEAPON);
-
-	m_vecItem[IT_WEAPON].push_back(new CItem("중급검", 0, 20, 2000));
-	dynamic_cast<CItem*>(m_vecItem[IT_WEAPON].back())->Set_ItemType(IT_WEAPON);
-
-	m_vecItem[IT_WEAPON].push_back(new CItem("고급검", 0, 30, 3000));
-	dynamic_cast<CItem*>(m_vecItem[IT_WEAPON].back())->Set_ItemType(IT_WEAPON);
-
-	m_vecItem[IT_SHIELD].push_back(new CItem("초급옷", 10, 0, 1000));
-	dynamic_cast<CItem*>(m_vecItem[IT_SHIELD].back())->Set_ItemType(IT_SHIELD);
-
-	m_vecItem[IT_SHIELD].push_back(new CItem("중급옷", 20, 0, 2000));
-	dynamic_cast<CItem*>(m_vecItem[IT_SHIELD].back())->Set_ItemType(IT_SHIELD);
-
-	m_vecItem[IT_SHIELD].push_back(new CItem("고급옷", 30, 0, 3000));
-	dynamic_cast<CItem*>(m_vecItem[IT_SHIELD].back())->Set_ItemType(IT_SHIELD);
+	
 }
 
 void CStore::Update()

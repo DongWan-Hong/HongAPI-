@@ -6,10 +6,11 @@
 #include "CAbstractFactory.h"
 #include "CScrollMgr.h"
 #include "CTileMgr.h"
-#include "Block.h"
+#include "BaseBlock.h"
 #include "BlockMgr.h"
 #include "CPlayer.h"
 #include "UIBase.h"
+#include "Inven.h"
 
 CStage_00::CStage_00()
 {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "CObj.h"
-#include "Block.h"
+#include "BaseBlock.h"
 
 template<typename T>
 class CAbstractFactory
@@ -44,7 +44,7 @@ public:
 	//}
 	static CObj* Create_Block(float _fX, float _fY, float _fCX, float _fCY)
 	{
-		CBlock* pBlock = new CBlock(_fX, _fY, _fCX, _fCY);
+		CBaseBlock* pBlock = new CBaseBlock(_fX, _fY, _fCX, _fCY);
 		pBlock->Initialize();
 		return pBlock;
 	}

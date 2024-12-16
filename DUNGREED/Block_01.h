@@ -1,7 +1,7 @@
 #pragma once
-#include "Block.h"
+#include "BaseBlock.h"
 
-class CBlock_01 :public CBlock
+class CBlock_01 :public CBaseBlock
 {
 public:
 	CBlock_01();

@@ -1,7 +1,8 @@
 #pragma once
 #include "CObj.h"
 #include "Different.h"
-
+#include "Item.h"
+#include "Define.h"
 
 class CPlayer :    public CObj
 {
@@ -46,9 +47,20 @@ private:
     CObj*       Create_Shield();
     void        Change_Motion();
    
+public:
 
+    void OpenInventory();   // 인벤토리 열기/닫기 함수 추가
+    void AddItemToInventory(CObj* item); // 아이템 추가 함수
+    void EquipItemFromInventory();       // 인벤토리에서 아이템 장착
+    void UnequipItemToInventory();
+    void Equip(CItem* pItem);
+    CItem* UnEquip();
+    CItem* GetEquip_Item()
+    {
+        return m_pEquippedItem;
+    }
 
-
+    CItem* m_pEquippedItem; // 장착한 아이템
 private:
     POINT               m_tPosin;
 
@@ -63,7 +75,7 @@ private:
     float m_fGravity;
     bool m_bDefatule_IDle;
     //bool m_bDoubleJump;
- 
+
 private:
     bool m_bDashing;       // 대쉬 중인지 여부
     float m_fDash_Mouse_X;  // 대쉬 목표 지점 X
@@ -75,6 +87,7 @@ private:
 
     vector<Trail> m_vTrails;
 
+   
   
 };
 

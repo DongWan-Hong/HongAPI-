@@ -6,7 +6,7 @@
 #include "CAbstractFactory.h"
 #include "CScrollMgr.h"
 #include "CTileMgr.h"
-#include "Block.h"
+#include "BaseBlock.h"
 #include "BlockMgr.h"
 
 CStage::CStage()
@@ -31,7 +31,7 @@ void CStage::Initialize()
 
 	for (int i = 2; i < 10; i++) // 블럭 크기는 180
 	{
-		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBlock>::Create(i*50.f, 1168.f, 0.f));
+		CObjMgr::Get_Instance()->Add_Object(OBJ_BLOCK, CAbstractFactory<CBaseBlock>::Create(i*50.f, 1168.f, 0.f));
 	}
 	
 

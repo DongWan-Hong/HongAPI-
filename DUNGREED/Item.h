@@ -1,31 +1,19 @@
 #pragma once
-
-#include "CObj.h"
+#include "CObj.h" // 객체 기본 클래스
 
 class CItem : public CObj
 {
 public:
-	CItem();
-	CItem(const char* pName, int _iHp, int _iAttack, int _iMoney = 1000);
-	virtual ~CItem();
+    CItem() { m_eOBJID = OBJ_UI; } // 기본 객체 ID
+    virtual ~CItem() = default;   // 가상 소멸자
 
-public:
-	void			Set_ItemType(ITEMTYPE eType) { m_eType = eType; }
-	void			Set_EquipState(STATE eState) { m_eState = eState; }
+    virtual void Equip();    // 장착 기능 
+    virtual void Render(HDC hDC) override ; // 아이템 렌더링 
 
-public:
-	ITEMTYPE		Get_ItemType() { return m_eType; }
-	STATE			Get_EquipState() { return m_eState; }
+    bool IsEquipped() const { return m_bEquipped; }
+    void SetEquipped(bool equipped) { m_bEquipped = equipped; }
 
-	ITEMTYPE		m_eType;
-	STATE			m_eState;
-
-	// CObj을(를) 통해 상속됨
-	void Initialize() override;
-	int Update() override;
-	void Late_Update() override;
-	void Render(HDC hDC) override;
-	void Release() override;
+protected:
+    bool m_bEquipped; // 아이템 장착 상태
 };
-
 

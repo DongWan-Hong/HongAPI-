@@ -1,35 +1,12 @@
 #include "pch.h"
 #include "Item.h"
 
-CItem::CItem()
+void CItem::Equip() 
+	
 {
-}
-
-CItem::CItem(const char* pName, int _iHp, int _iAttack, int _iMoney)
-{
-}
-
-CItem::~CItem()
-{
-}
-
-void CItem::Initialize()
-{
-}
-
-int CItem::Update()
-{
-    return 0;
-}
-
-void CItem::Late_Update()
-{
+	m_bEquipped = false;
 }
 
 void CItem::Render(HDC hDC)
-{
-}
-
-void CItem::Release()
 {
 }

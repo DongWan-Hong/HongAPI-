@@ -14,7 +14,7 @@
       <Filter>01. OBJECT\01. MoveObject\03_Mouse</Filter>
     </ClCompile>
     <ClCompile Include="Different.cpp">
-      <Filter>01. OBJECT\01. MoveObject\00_Plyaer\Different</Filter>
+      <Filter>01. OBJECT\01. MoveObject\Different</Filter>
     </ClCompile>
     <ClCompile Include="CMyButton.cpp">
       <Filter>01. OBJECT\02 .StaticObject\01_Button</Filter>
@@ -76,8 +76,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>01. OBJECT\02 .StaticObject\02. Block</Filter>
+    <ClCompile Include="BaseBlock.cpp">
+      <Filter>04. Block\02. Block</Filter>
     </ClCompile>
     <ClCompile Include="StaticObj.cpp">
       <Filter>01. OBJECT\02 .StaticObject</Filter>
@@ -103,12 +103,6 @@
     <ClCompile Include="Item.cpp">
       <Filter>06. Item</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>06. Item\01. Weapon</Filter>
-    </ClCompile>
-    <ClCompile Include="Inven.cpp">
-      <Filter>05. InvenUI</Filter>
-    </ClCompile>
     <ClCompile Include="Store.cpp">
       <Filter>07. Store</Filter>
     </ClCompile>
@@ -117,6 +111,15 @@
     </ClCompile>
     <ClCompile Include="UIBase.cpp">
       <Filter>03. DESIGN\UIManager\UIBase</Filter>
+    </ClCompile>
+    <ClCompile Include="Inven.cpp">
+      <Filter>05. UI\01_Player_UI\Inven</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon_Sword.cpp">
+      <Filter>06. Item\01. Weapon\Sword</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon_FireSword.cpp">
+      <Filter>06. Item\01. Weapon\Fire_Sworld</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,8 +210,8 @@
     <ClInclude Include="DUNGREED.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>01. OBJECT\02 .StaticObject\02. Block</Filter>
+    <ClInclude Include="BaseBlock.h">
+      <Filter>04. Block\02. Block</Filter>
     </ClInclude>
     <ClInclude Include="StaticObj.h">
       <Filter>01. OBJECT\02 .StaticObject</Filter>
@@ -217,7 +220,7 @@
       <Filter>01. OBJECT\01. MoveObject</Filter>
     </ClInclude>
     <ClInclude Include="Different.h">
-      <Filter>01. OBJECT\01. MoveObject\00_Plyaer\Different</Filter>
+      <Filter>01. OBJECT\01. MoveObject\Different</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
       <Filter>03. DESIGN\CollisionMgr\Box</Filter>
@@ -237,12 +240,6 @@
     <ClInclude Include="Item.h">
       <Filter>06. Item</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>06. Item\01. Weapon</Filter>
-    </ClInclude>
-    <ClInclude Include="Inven.h">
-      <Filter>05. InvenUI</Filter>
-    </ClInclude>
     <ClInclude Include="Store.h">
       <Filter>07. Store</Filter>
     </ClInclude>
@@ -251,6 +248,15 @@
     </ClInclude>
     <ClInclude Include="UIBase.h">
       <Filter>03. DESIGN\UIManager\UIBase</Filter>
+    </ClInclude>
+    <ClInclude Include="Inven.h">
+      <Filter>05. UI\01_Player_UI\Inven</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon_Sword.h">
+      <Filter>06. Item\01. Weapon\Sword</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon_FireSword.h">
+      <Filter>06. Item\01. Weapon\Fire_Sworld</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -364,20 +370,11 @@
     <Filter Include="01. OBJECT\02 .StaticObject\01_Button">
       <UniqueIdentifier>{f33eb908-6abb-4038-8e33-82ecd3bbaa06}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01. OBJECT\02 .StaticObject\02. Block">
-      <UniqueIdentifier>{a41c8e12-793d-433c-83e4-511426a52d81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Store">
       <UniqueIdentifier>{5cce3909-dc93-482d-bfe6-19c1a7a45572}</UniqueIdentifier>
     </Filter>
     <Filter Include="06. Item">
       <UniqueIdentifier>{532f209a-4e02-4cbd-881e-bc21c5dbc723}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. OBJECT\01. MoveObject\00_Plyaer\Different">
-      <UniqueIdentifier>{a38ddbfd-6b4f-4a70-b8e2-8622fc472963}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="06. Item\02. Shiled">
-      <UniqueIdentifier>{aab32539-b56b-4b12-89d1-e013ff9bea83}</UniqueIdentifier>
     </Filter>
     <Filter Include="06. Item\01. Weapon">
       <UniqueIdentifier>{a469bf85-88a2-42ae-ada0-ed9f1a01856a}</UniqueIdentifier>
@@ -388,8 +385,32 @@
     <Filter Include="03. DESIGN\UIManager\UIBase">
       <UniqueIdentifier>{8567d525-3cb7-4d3f-82ce-6ed520db80f3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. InvenUI">
+    <Filter Include="05. UI">
       <UniqueIdentifier>{7b387785-81b9-417c-b5a3-dd85c26dcb6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. UI\01_Player_UI">
+      <UniqueIdentifier>{daddfbdb-07dd-42bf-83fa-212a020adb55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. UI\02_Monster_UI">
+      <UniqueIdentifier>{2a69563c-5332-42ec-b227-b9f6c5521449}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. UI\01_Player_UI\Inven">
+      <UniqueIdentifier>{d885dccb-ee5d-466b-81d4-7e4aba774851}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. UI\01_Player_UI\Stat">
+      <UniqueIdentifier>{41977d5c-4431-4e4d-b88e-87c4da30c51e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Block\02. Block">
+      <UniqueIdentifier>{a41c8e12-793d-433c-83e4-511426a52d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01. OBJECT\01. MoveObject\Different">
+      <UniqueIdentifier>{a38ddbfd-6b4f-4a70-b8e2-8622fc472963}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Item\01. Weapon\Sword">
+      <UniqueIdentifier>{f552d55c-f427-4634-bb28-15d5dfa385c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="06. Item\01. Weapon\Fire_Sworld">
+      <UniqueIdentifier>{3ff31b0c-57a4-4549-b287-6eb365c0b4e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

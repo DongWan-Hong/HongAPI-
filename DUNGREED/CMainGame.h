@@ -21,10 +21,10 @@ public:
 	void		Late_Update();
 	void		Render();
 	void		Release();
+	static HDC			m_hDC;
 
 private:
-	HDC			m_hDC;
-
+	
 	ULONGLONG	m_dwTime;
 	int			m_iFPS;
 	TCHAR		m_szFPS[16];

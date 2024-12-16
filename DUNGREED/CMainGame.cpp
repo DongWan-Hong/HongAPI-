@@ -12,9 +12,10 @@
 #include "CMouse.h"
 #include "UIMgr.h"
 
+HDC CMainGame::m_hDC = nullptr;
 
 CMainGame::CMainGame()
-	: m_dwTime(GetTickCount64()), m_iFPS(0), m_hDC(nullptr)
+	: m_dwTime(GetTickCount64()), m_iFPS(0)
 {
 	ZeroMemory(m_szFPS, sizeof(m_szFPS));
 }

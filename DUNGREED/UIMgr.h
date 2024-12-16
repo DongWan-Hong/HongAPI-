@@ -6,7 +6,7 @@
 class CUIMgr
 {
 public:
-    SINGLE(CUIMgr);
+   // SINGLE(CUIMgr);
 
     void Initialize();
 

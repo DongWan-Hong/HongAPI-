@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Block.h" />
+    <ClInclude Include="BaseBlock.h" />
     <ClInclude Include="BlockMgr.h" />
     <ClInclude Include="Block_01.h" />
     <ClInclude Include="BoxCollider.h" />
@@ -164,6 +164,7 @@
     <ClInclude Include="CScene.h" />
     <ClInclude Include="CSceneMgr.h" />
     <ClInclude Include="CScrollMgr.h" />
+    <ClInclude Include="Weapon_FireSword.h" />
     <ClInclude Include="Different.h" />
     <ClInclude Include="CStage.h" />
     <ClInclude Include="CTile.h" />
@@ -182,10 +183,10 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="UIBase.h" />
     <ClInclude Include="UIMgr.h" />
-    <ClInclude Include="Weapon.h" />
+    <ClInclude Include="Weapon_Sword.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Block.cpp" />
+    <ClCompile Include="BaseBlock.cpp" />
     <ClCompile Include="BlockMgr.cpp" />
     <ClCompile Include="Block_01.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
@@ -209,6 +210,7 @@
     <ClCompile Include="CScene.cpp" />
     <ClCompile Include="CSceneMgr.cpp" />
     <ClCompile Include="CScrollMgr.cpp" />
+    <ClCompile Include="Weapon_FireSword.cpp" />
     <ClCompile Include="Different.cpp" />
     <ClCompile Include="CStage.cpp" />
     <ClCompile Include="CTile.cpp" />
@@ -228,7 +230,7 @@
     <ClCompile Include="Store.cpp" />
     <ClCompile Include="UIBase.cpp" />
     <ClCompile Include="UIMgr.cpp" />
-    <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="Weapon_Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DUNGREED.rc" />
