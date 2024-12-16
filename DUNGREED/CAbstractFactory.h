@@ -29,6 +29,19 @@ public:
 
 		return pObj;
 	}
+	static T* Create_UI(bool _bValue)
+	{
+		T* pObj = new T(_bValue);
+		pObj->Initialize();
+		return pObj;
+	}
+	//static CObj* Create_UI(float _fX, float _fY, float _fCX, float _fCY)
+	//{
+	//	CObj* pObj = new T;
+	//	pObj->Initialize();
+	//	pObj->Set_All(_fX, _fY, _fCX, _fCY);
+	//	return pObj;
+	//}
 	static CObj* Create_Block(float _fX, float _fY, float _fCX, float _fCY)
 	{
 		CBlock* pBlock = new CBlock(_fX, _fY, _fCX, _fCY);

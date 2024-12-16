@@ -15,6 +15,12 @@ private:
 
 public:
 	void		Set_Scene(SCENEID eID);
+	
+	CScene* Get_CurScene()
+	{
+		return m_pScene;
+	}
+
 	int			Update();
 	void		Late_Update();
 	void		Render(HDC hDC);

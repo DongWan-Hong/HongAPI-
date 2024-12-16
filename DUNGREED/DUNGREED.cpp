@@ -91,9 +91,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
     }
 
-   
     ShutdownGDIPlus();
-
     return (int)msg.wParam;
 }
 

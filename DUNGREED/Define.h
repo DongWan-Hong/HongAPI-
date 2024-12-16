@@ -20,6 +20,12 @@
 #define ADD_BMP(file, name)   CBmpMgr::Get_Instance()->Insert_Bmp(file, name); 
 #define FIND_BMP(key) CBmpMgr::Get_Instance()->Find_Image(key)
 
+#define SINGLE(type) static type* Get_Instance()\
+                       {\
+                             static type mgr;\
+                             return &mgr;\
+                       }
+
 extern HWND		g_hWnd;
 extern bool m_bInven;
 enum DRAWPOINT { HEAD, TAIL, DRAWPOINT_END };
@@ -47,14 +53,17 @@ struct Trail
 
 enum OBJID 
 { 
-	OBJ_MOUSE,
 	OBJ_BLOCK,
 	OBJ_PLAYER,
 	OBJ_BULLET, 
 	OBJ_MONSTER, 
 	OBJ_SHIELD, 
 	OBJ_BUTTON,
-	OBJ_END 
+	OBJ_MOUSE,
+
+
+	OBJ_UI = 31,
+	OBJ_END = 32 
 };
 
 

@@ -88,12 +88,12 @@ void CCollisionMgr::Collision_RectEx(list<CObj*> _Dst, list<CObj*> _Src)
 						// 좌 충돌
 						if (Dst->Get_Info().fX < Src->Get_Info().fX)
 						{
-							/*Dst->Set_PosX(-fX);*/
+							Dst->Set_PosX(-fX);
 						}
 						// 우 충돌
 						else
 						{
-							/*Dst->Set_PosX(fX);*/
+						   Dst->Set_PosX(fX);
 						}
 					}
 					}

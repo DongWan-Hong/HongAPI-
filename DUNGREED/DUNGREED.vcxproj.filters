@@ -107,10 +107,16 @@
       <Filter>06. Item\01. Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Inven.cpp">
-      <Filter>05. Inven</Filter>
+      <Filter>05. InvenUI</Filter>
     </ClCompile>
     <ClCompile Include="Store.cpp">
       <Filter>07. Store</Filter>
+    </ClCompile>
+    <ClCompile Include="UIMgr.cpp">
+      <Filter>03. DESIGN\UIManager</Filter>
+    </ClCompile>
+    <ClCompile Include="UIBase.cpp">
+      <Filter>03. DESIGN\UIManager\UIBase</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -235,10 +241,16 @@
       <Filter>06. Item\01. Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Inven.h">
-      <Filter>05. Inven</Filter>
+      <Filter>05. InvenUI</Filter>
     </ClInclude>
     <ClInclude Include="Store.h">
       <Filter>07. Store</Filter>
+    </ClInclude>
+    <ClInclude Include="UIMgr.h">
+      <Filter>03. DESIGN\UIManager</Filter>
+    </ClInclude>
+    <ClInclude Include="UIBase.h">
+      <Filter>03. DESIGN\UIManager\UIBase</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -355,9 +367,6 @@
     <Filter Include="01. OBJECT\02 .StaticObject\02. Block">
       <UniqueIdentifier>{a41c8e12-793d-433c-83e4-511426a52d81}</UniqueIdentifier>
     </Filter>
-    <Filter Include="05. Inven">
-      <UniqueIdentifier>{7b387785-81b9-417c-b5a3-dd85c26dcb6d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="07. Store">
       <UniqueIdentifier>{5cce3909-dc93-482d-bfe6-19c1a7a45572}</UniqueIdentifier>
     </Filter>
@@ -373,10 +382,22 @@
     <Filter Include="06. Item\01. Weapon">
       <UniqueIdentifier>{a469bf85-88a2-42ae-ada0-ed9f1a01856a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="03. DESIGN\UIManager">
+      <UniqueIdentifier>{05d0b3ca-27fa-4881-bb05-95b1f302703d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03. DESIGN\UIManager\UIBase">
+      <UniqueIdentifier>{8567d525-3cb7-4d3f-82ce-6ed520db80f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="05. InvenUI">
+      <UniqueIdentifier>{7b387785-81b9-417c-b5a3-dd85c26dcb6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DUNGREED.rc">
       <Filter>리소스 파일</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

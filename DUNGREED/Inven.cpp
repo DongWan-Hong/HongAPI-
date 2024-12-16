@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Inven.h"
 CInven::CInven()
-    :m_pInven_Player(nullptr), m_iSize(15)
+    :m_pInven_Player(nullptr), m_iSize(15),CUI(false)
 {
     m_vecInven.reserve(m_iSize);
 }
@@ -14,8 +14,9 @@ void CInven::Initialize()
 {
 }
 
-void CInven::Update()
+int CInven::Update()
 {
+    return 0;
 }
 
 void CInven::Render()

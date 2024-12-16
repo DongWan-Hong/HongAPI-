@@ -32,6 +32,7 @@ public:
 	}
 
 	virtual void OnCollision(CObj* _op);
+
 	const RENDERID Get_GroupID() const { return m_eRender; }
 
 	void		Set_PosX(float _fX) { m_tInfo.fX += _fX; }

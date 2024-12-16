@@ -1,7 +1,8 @@
 #pragma once
 #include "CPlayer.h"
+#include "UIBase.h"
 
-class CInven
+class CInven : public CUI
 {
 public:
 	CInven();
@@ -12,7 +13,7 @@ public:
 
 public:
 	void Initialize();
-	void Update();
+	int Update();
 	void Render();
 	void Release();
 

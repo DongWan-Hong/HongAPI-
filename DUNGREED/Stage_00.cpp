@@ -9,6 +9,7 @@
 #include "Block.h"
 #include "BlockMgr.h"
 #include "CPlayer.h"
+#include "UIBase.h"
 
 CStage_00::CStage_00()
 {
@@ -28,10 +29,16 @@ void CStage_00::Initialize()
 	ADD_BMP(L"../Image3/UI/Keyboard_S2.bmp", L"Key_S");
 
 	ADD_BMP(L"../Image3/UI/Keyboard_Plus1.bmp", L"Key_Plus");
-	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
+
+	int		iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+	int		iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
 	CObjMgr::Get_Instance()->Add_Object(OBJ_PLAYER, CAbstractFactory<CPlayer>::Create());
 
 	//CBlockMgr::Get_Instance()->Initialize();
+
+	// UI 매니저 테스트
+
 
 }
 
@@ -115,7 +122,6 @@ void CStage_00::Render(HDC hDC)
 		0,
 		60, 60,
 		RGB(255, 255, 255));
-
 
 
 	CObjMgr::Get_Instance()->Render(hDC);

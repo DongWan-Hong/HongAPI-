@@ -19,6 +19,7 @@
 #include <map>
 #include <vector>
 #include <stack>
+#include <string>
 
 #ifdef _DEBUG
 

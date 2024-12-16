@@ -2,6 +2,8 @@
 #include "CSceneMgr.h"
 #include "Stage_00.h"
 #include "BlockMgr.h"
+#include "CAbstractFactory.h"
+#include "UIBase.h"
 
 CSceneMgr* CSceneMgr::m_pInstance = nullptr;
 
@@ -50,6 +52,9 @@ void CSceneMgr::Set_Scene(SCENEID eID)
 		}
 
 		m_pScene->Initialize();
+
+		//CObj* pUI = CAbstractFactory<CUI>::Create_UI(true);
+		//m_pScene->Add_UI(pUI);
 
 		m_ePreScene = m_eCurScene;
 	}

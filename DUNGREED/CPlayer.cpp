@@ -108,59 +108,30 @@ void CPlayer::Render(HDC hDC)
 	GetCursorPos(&ptMouse);
 	ScreenToClient(g_hWnd, &ptMouse);
 
+	
+	const wchar_t* imagePath = (ptMouse.x - iScrollX > m_tInfo.fX) ?
+		L"../Image2/player/baseCharEffect1.bmp" :  // 오른쪽 이미지
+		L"../Image2/player/baseCharEffect_Left1.bmp"; // 왼쪽 이미지
 
-	if ((ptMouse.x - iScrollX > m_tInfo.fX)) // 마우스 좌표가 플레이어보다  오른쪽일때
-	for (const auto& trail : m_vTrails)
-	{
-		
-		Graphics graphics(hDC);
-
-		// 이미지 로드
-		Image image(L"../Image2/player/baseCharEffect1.bmp");
-
-		// 투명도 설정 (Alpha 값)
-		BYTE alpha = (BYTE)(trail.alpha * 100);
-
-		// ImageAttributes를 사용하여 특정 색상 (255, 0, 255)을 투명화
-		ImageAttributes imgAttributes;
-		Color transparentColor(255, 255, 0, 255); // RGB(255, 0, 255)를 투명하게
-		imgAttributes.SetColorKey(transparentColor, transparentColor);
-
-		// 투명도 적용을 위한 색상 매트릭스 설정
-		ColorMatrix colorMatrix = {
-			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, alpha / 255.0f, 0.0f,
-			0.0f, 0.0f, 0.0f, 0.0f, 1.0f
-		};
-		imgAttributes.SetColorMatrix(&colorMatrix);
-
-		// 이미지 출력
-		graphics.DrawImage(&image,
-			Rect((int)trail.x + iScrollX-70, (int)trail.y-40 + iScrollY, 102, 100),
-			0, 0, 102, 100,
-			UnitPixel, &imgAttributes);
-	}
-
-	if ((ptMouse.x - iScrollX < m_tInfo.fX)) // 마우스 좌표가 플레이어보다  왼쪽일때
-		for (const auto& trail : m_vTrails)
-		{
-
-			Graphics graphics(hDC);
-
-			
-			Image image(L"../Image2/player/baseCharEffect_Left1.bmp");
+	int offsetX = (ptMouse.x - iScrollX > m_tInfo.fX) ? -70 : -20; // 
 
 	
-			BYTE alpha = (BYTE)(trail.alpha);
+		for (const auto& trail : m_vTrails)
+		{
+			Graphics graphics(hDC);
 
-		
+
+			Image image(imagePath);
+
+
+			BYTE alpha = (BYTE)(trail.alpha * 70);
+
+			// ImageAttributes를 사용하여 특정 색상 (255, 0, 255)을 투명화
 			ImageAttributes imgAttributes;
-			Color transparentColor(255, 255, 0, 255); 
+			Color transparentColor(255, 255, 0, 255);
 			imgAttributes.SetColorKey(transparentColor, transparentColor);
 
-			
+			// 투명도 적용을 위한 색상 매트릭스 설정
 			ColorMatrix colorMatrix = {
 				1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 				0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
@@ -172,24 +143,20 @@ void CPlayer::Render(HDC hDC)
 
 			// 이미지 출력
 			graphics.DrawImage(&image,
-				Rect((int)trail.x + iScrollX - 20, (int)trail.y - 40 + iScrollY, 102, 100),
-				0, 0, 102, 100,
-				UnitPixel, &imgAttributes);
+				Rect((int)trail.x + iScrollX + offsetX, (int)trail.y - 40 + iScrollY, 102, 100),
+				0, 0, 102, 100, UnitPixel, &imgAttributes);
 		}
 
-	HDC		hPlayerDC = FIND_BMP(m_pImgKey); 
 
-	GdiTransparentBlt(hDC,			
-		m_tRect.left + iScrollX,	// 복사 받을 위치 좌표 X, Y	
-		m_tRect.top + iScrollY,
-		(int)m_tInfo.fCX,			// 복사한 이미지 크기 어떻게할껀지
-		(int)m_tInfo.fCY,
+	HDC hPlayerDC = FIND_BMP(m_pImgKey);
+	GdiTransparentBlt(hDC,
+		m_tRect.left + iScrollX, m_tRect.top + iScrollY,
+		(int)m_tInfo.fCX, (int)m_tInfo.fCY,
 		hPlayerDC,
-		(int)m_tInfo.fCX * m_tFrame.iFrameStart,	// 		
+		(int)m_tInfo.fCX * m_tFrame.iFrameStart,
 		(int)m_tInfo.fCY * m_tFrame.iMotion,
-		102,			// 원본 크기 적어주고
-		100,
-		RGB(255, 0, 255));		
+		102, 100, RGB(255, 0, 255));
+
 
 	if (m_pImgKey == (L"Player_Right") || m_pImgKey == (L"Player_Left") && m_bJump == false)
 	{
@@ -213,7 +180,6 @@ void CPlayer::Render(HDC hDC)
 
 		Image Inven(L"../Image3/Inventory/InventoryBase2.png");
 
-
 		ImageAttributes imgAttributes;
 		Color transparentColor(255, 255, 0, 255);
 		imgAttributes.SetColorKey(transparentColor, transparentColor);
@@ -227,6 +193,8 @@ void CPlayer::Render(HDC hDC)
 			0, 0, 492, 752,
 			UnitPixel, &imgAttributes);
 	}
+
+
 
 
 	TCHAR szBuffer[128];
@@ -398,23 +366,24 @@ void CPlayer::Jumping()
 {
 	float fY(0.f);
 	if (m_bDashing) return; // 대쉬 중에는 Jumping 처리하지 ㄴㄴ
-	bool bLineCol = CLineMgr::Get_Instance()->Collision_Line(m_tInfo.fX, &fY);
-
+	//bool bLineCol = CLineMgr::Get_Instance()->(m_tInfo.fX, &fY);
+	
 	// 중력 적용 (항상 실행)
-	m_tInfo.fY += 5.f;
-
+	m_tInfo.fY += 8.f;
 
 	static float prevY = m_tInfo.fY; // 이부분은 절대 건들이지 말기!!!
 	m_fGravity = m_tInfo.fY - prevY; // 이부분은 절대 건들이지 말기!!!
 	prevY = m_tInfo.fY;              // 이부분은 절대 건들이지 말기!!!
 
-	const float fFixedFallSpeed = 10.0f;
+
+
+	const float fFixedFallSpeed = 10.0f; //최대속도
 
 	if (m_bJump) // 점프 중
 	{
 		float jumpOffset = (m_fJumpPower * m_fTime) - (9.8f * m_fTime * m_fTime) * 0.5f;
 
-		if (jumpOffset < 0.0f) // 낙하 중
+		if (jumpOffset < 0.0f) // 임계점 도달하면 10.f 로 떨어지게 하겠다임
 		{
 			m_tInfo.fY += fFixedFallSpeed;
 		}
@@ -424,22 +393,10 @@ void CPlayer::Jumping()
 		}
 
 		m_fTime += 0.25f;
-		if (bLineCol && (m_tInfo.fY >= fY))
-		{
-			m_bJump = false;
-			m_fTime = 0.f;
-			m_tInfo.fY = fY;
-		}
+		
 	}
-	else if (bLineCol) // 바닥 충돌
-	{
-		m_tInfo.fY = fY;
-	}
+	
 }
-
-
-
-
 
 
 void CPlayer::OnCollision(CObj* _op)

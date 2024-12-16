@@ -180,6 +180,8 @@
     <ClInclude Include="StaticObj.h" />
     <ClInclude Include="Store.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UIBase.h" />
+    <ClInclude Include="UIMgr.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <ItemGroup>
@@ -224,6 +226,8 @@
     <ClCompile Include="Stage_00.cpp" />
     <ClCompile Include="StaticObj.cpp" />
     <ClCompile Include="Store.cpp" />
+    <ClCompile Include="UIBase.cpp" />
+    <ClCompile Include="UIMgr.cpp" />
     <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -232,6 +236,9 @@
   <ItemGroup>
     <Image Include="DUNGREED.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
