@@ -67,10 +67,13 @@ int CInven::Update()
 
 void CInven::Render(HDC hDC)
 {
-    if (!CPlayer::m_bInven) return;
+    if (!CPlayer::m_bInven) return; // 인벤토리 열려있지 않으면 리턴
 
     HDC hInvenDC = FIND_BMP(L"Inven_UI");
     BitBlt(hDC, 620, 80, WINCX, WINCY, hInvenDC, 0, 0, SRCCOPY);
+
+    const int iEquipSlot_X = 670;
+    const int iEquipSlot_Y = 180;
 
     const int iInven_Start_X = 654;
     const int iInven_Start_Y = 370;
@@ -80,22 +83,20 @@ void CInven::Render(HDC hDC)
     const int iSlot_length = 3;
 
     int iItemIndex = 0;
+
     POINT ptMouse;
     GetCursorPos(&ptMouse);
-    ScreenToClient(g_hWnd, &ptMouse); // 마우스 좌표 가져오기
+    ScreenToClient(g_hWnd, &ptMouse);
 
     int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
     int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
-    ptMouse.x -= iScrollX;
-    ptMouse.y -= iScrollY;
+    int mouseX = ptMouse.x - iScrollX;
+    int mouseY = ptMouse.y - iScrollY;
 
-    TCHAR szBuffer[64];
-    _stprintf_s(szBuffer, _T("inv: X=%d, Y=%d"), ptMouse.x, ptMouse.y);
-
-    SetTextColor(hDC, RGB(255, 255, 255));  // 글자 색상 (흰색)
-    SetBkMode(hDC, TRANSPARENT);           // 배경 투명 처리
-    TextOut(hDC, 10, 300, szBuffer, (int)_tcslen(szBuffer)); // 좌표 출력 위치 (10, 10)
-
+    // 마우스 좌표 출력
+    TCHAR szMouseDebug[128];
+    _stprintf_s(szMouseDebug, L"Mouse: X=%d, Y=%d", mouseX, mouseY);
+    TextOut(hDC, 10, 300, szMouseDebug, _tcslen(szMouseDebug));
 
     for (int i = 0; i < iSlot_length; ++i)
     {
@@ -103,40 +104,49 @@ void CInven::Render(HDC hDC)
         {
             if (iItemIndex >= m_vecInven.size()) return;
 
-            int posX = iInven_Start_X + j * (iSlot_Size + iSLOT_Jump);
-            int posY = iInven_Start_Y + i * (iSlot_Size + iSLOT_Jump);
+            CItem* pItem = dynamic_cast<CItem*>(m_vecInven[iItemIndex]);
+            if (!pItem) continue;
 
-            TCHAR szSlotBuffer[128];
-            _stprintf_s(szSlotBuffer, _T("Slot[%d]: X=%d, Y=%d"), iItemIndex, posX, posY);
-            TextOut(hDC, 10, 320 + (iItemIndex * 20), szSlotBuffer, (int)_tcslen(szSlotBuffer));
+            int posX = iInven_Start_X + j * (iSlot_Size + iSLOT_Jump) - iScrollX;
+            int posY = iInven_Start_Y + i * (iSlot_Size + iSLOT_Jump) - iScrollY;
 
-            // 마우스 우클릭 감지
-            if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON) &&
-                ptMouse.x >= posX && ptMouse.x <= posX + iSlot_Size &&
-                ptMouse.y >= posY && ptMouse.y <= posY + iSlot_Size)
+           
+            TCHAR szSlotDebug[128];
+            _stprintf_s(szSlotDebug, L"Slot[%d]: X=%d~%d, Y=%d~%d", iItemIndex, posX, posX + iSlot_Size, posY, posY + iSlot_Size);
+            TextOut(hDC, 10, 350 + (iItemIndex * 20), szSlotDebug, _tcslen(szSlotDebug));
+
+           
+            if (CKeyMgr::Get_Instance()->Key_Down(VK_RBUTTON) && // Key_Pressing 사용
+                mouseX >= posX && mouseX <= posX + iSlot_Size &&
+                mouseY >= posY && mouseY <= posY + iSlot_Size)
             {
-                CItem* pItem = dynamic_cast<CItem*>(m_vecInven[iItemIndex]);
-                if (pItem) // 변환이 성공했을 때만 실행
-                {
-                    ToggleEquip(pItem);
-                }
-
+                ToggleEquip(pItem);
             }
 
-            m_vecInven[iItemIndex]->Set_Pos((float)posX, (float)posY);
-            m_vecInven[iItemIndex]->Render(hDC);
+
+            if (pItem->IsEquipped())
+            {
+                pItem->Set_Pos((float)iEquipSlot_X, (float)iEquipSlot_Y);
+            }
+            else
+            {
+                pItem->Set_Pos((float)posX + iScrollX, (float)posY + iScrollY);
+            }
+
+            pItem->Render(hDC);
+
             ++iItemIndex;
         }
     }
-
-
-
 }
+
+
+
 
 
 void CInven::Release()
 {
-    // 메모리 정리
+    
     for (auto& pObj : m_vecInven) 
     {
 
@@ -188,21 +198,36 @@ void CInven::ToggleEquip(CItem* pItem)
     CPlayer* pPlayer = dynamic_cast<CPlayer*>(CObjMgr::Get_Instance()->Get_Player());
     if (!pPlayer) return;
 
-    if (pItem->IsEquipped()) // 이미 장착된 아이템이면 해제
-    {
-        pItem->SetEquipped(false); // 아이템 상태 해제
-        CItem* pUnequipped = pPlayer->UnEquip(); // 플레이어의 장착 해제
-        if (pUnequipped) m_vecInven.push_back(pUnequipped); // 해제된 아이템을 인벤토리에 추가
-    }
-    else // 장착되지 않은 아이템이면 장착
-    {
-        if (pPlayer->GetEquip_Item()) // 기존 아이템 해제
-        {
-            CItem* pUnequipped = pPlayer->UnEquip();
-            if (pUnequipped) m_vecInven.push_back(pUnequipped);
-        }
+    static DWORD dwLastClickTime = 0;  // 마지막 우클릭 시간
+    DWORD currentTime = GetTickCount64();
 
-        pItem->SetEquipped(true); // 아이템 상태 장착
-        pPlayer->Equip(pItem);    // 플레이어에 아이템 장착
+    // 1초 이내에 두 번째 우클릭 감지
+    if (currentTime - dwLastClickTime <= 1000)
+    {
+        // 아이템 장착 또는 해제
+        if (pItem->IsEquipped()) // 이미 장착된 아이템이면 해제
+        {
+            pItem->SetEquipped(false); // 아이템 상태 해제
+            if (!m_pInven_Player) return;
+
+            // 플레이어에서 해제된 아이템을 인벤토리로 다시 추가
+            pPlayer->UnEquip();
+        }
+        else // 장착되지 않은 아이템이면 장착
+        {
+            if (pPlayer->GetEquip_Item()) // 기존 아이템 해제
+            {
+                CItem* pUnequipped = pPlayer->UnEquip();
+                if (pUnequipped)
+                {
+                    pUnequipped->SetEquipped(false);
+                }
+            }
+            pItem->SetEquipped(true); // 새로운 아이템 장착
+            pPlayer->Equip(pItem);
+        }
     }
+
+    dwLastClickTime = currentTime;  
 }
+

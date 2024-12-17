@@ -59,6 +59,10 @@ public:
     {
         return m_pEquippedItem;
     }
+    CItem* GetEquippedItem()
+    {
+        return m_pEquippedItem;
+    }
 
     CItem* m_pEquippedItem; // 장착한 아이템
 private:

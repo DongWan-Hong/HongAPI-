@@ -128,7 +128,6 @@ void CPlayer::Render(HDC hDC)
 	{
 		Graphics graphics(hDC);
 
-
 		Image image(imagePath);
 
 
@@ -139,7 +138,7 @@ void CPlayer::Render(HDC hDC)
 		Color transparentColor(255, 255, 0, 255);
 		imgAttributes.SetColorKey(transparentColor, transparentColor);
 
-		// 투명도 적용을 위한 색상 매트릭스 설정
+	
 		ColorMatrix colorMatrix = {
 			1.0f, 0.0f, 0.0f, 0.0f, 0.0f,
 			0.0f, 1.0f, 0.0f, 0.0f, 0.0f,
@@ -190,12 +189,13 @@ void CPlayer::Render(HDC hDC)
 		// 포인터 유효성 체크
 		if (m_pEquippedItem != nullptr)
 		{
+			// 장착된 아이템을 렌더링
 			int iPlayerX = (int)m_tInfo.fX;
 			int iPlayerY = (int)m_tInfo.fY;
 
-			// 아이템 위치 설정
+			// 아이템 위치 설정 (플레이어와 관련된 위치)
 			m_pEquippedItem->Set_Pos((float)(iPlayerX + 10), (float)(iPlayerY - 20));
-			m_pEquippedItem->Render(hDC);
+			m_pEquippedItem->Render(hDC); // 장착된 아이템 렌더링
 		}
 	}
 

@@ -29,4 +29,8 @@ private:
     CObj* m_pInven_Player;
     vector<CObj*> m_vecInven;
     int m_iSize;
+private:
+
+    DWORD m_lastClickTime = 0; // 마지막 클릭 시간
+    const DWORD m_doubleClickInterval = 1000; // 1초 (1000 밀리초)
 };

@@ -17,12 +17,16 @@ public:
 
     virtual void Render(HDC hDC) override
     {
+        int iScrollX = (int)CScrollMgr::Get_Instance()->Get_ScrollX();
+        int iScrollY = (int)CScrollMgr::Get_Instance()->Get_ScrollY();
+
         HDC hItemDC = FIND_BMP(L"Bow_Icon");
         GdiTransparentBlt(hDC, (int)m_tInfo.fX+20, (int)m_tInfo.fY,
             (int)m_tInfo.fCX, (int)m_tInfo.fCY,
             hItemDC, 0, 0, (int)m_tInfo.fCX, (int)m_tInfo.fCY,
             RGB(255, 0, 255));
     }
+
     virtual int Update() override { return 0; }
     virtual void Late_Update() override {}
     virtual void Release() override {}
